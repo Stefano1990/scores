@@ -1,0 +1,14 @@
+{
+    "drivers": [
+        {
+            "place": 1,
+            "pos-x": 40,
+            "pos-y": 40
+        },
+        {
+            "place": 2,
+            "pos-x": 70,
+            "pos-y": 70
+        }
+    ]
+}

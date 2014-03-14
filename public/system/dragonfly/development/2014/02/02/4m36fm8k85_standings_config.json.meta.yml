@@ -1,0 +1,4 @@
+---
+name: standings_config.json
+model_class: StandingConfig
+model_attachment: config

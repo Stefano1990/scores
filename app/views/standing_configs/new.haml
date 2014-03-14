@@ -1,0 +1,4 @@
+%h1.page-header New config
+= simple_form_for [@standing, @standing_config], html: { class: 'form-horizontal', multipart: true } do |f|
+  = f.input :config, as: :file
+  = f.button :submit

@@ -1,0 +1,4 @@
+%h1.page-header New standing
+= simple_form_for [@user, @league, @standing], html: { class: 'form-horizontal', multipart: true } do |f|
+  = f.input :background, as: :file
+  = f.button :submit

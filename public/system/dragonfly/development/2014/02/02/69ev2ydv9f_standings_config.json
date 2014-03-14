@@ -1,0 +1,58 @@
+{
+    "drivers": [
+        {
+            "place": 1,
+            "pos-x": 40,
+            "pos-y": 40,
+            "pts-offset": 220
+        },
+        {
+            "place": 2,
+            "pos-x": 40,
+            "pos-y": 70,
+            "pts-offset": 220
+        },
+        {
+            "place": 3,
+            "pos-x": 40,
+            "pos-y": 100,
+            "pts-offset": 220
+        },
+        {
+            "place": 4,
+            "pos-x": 40,
+            "pos-y": 130,
+            "pts-offset": 220
+        },
+        {
+            "place": 5,
+            "pos-x": 40,
+            "pos-y": 160,
+            "pts-offset": 220
+        },
+        {
+            "place": 6,
+            "pos-x": 40,
+            "pos-y": 190,
+            "pts-offset": 220
+        },
+        {
+            "place": 7,
+            "pos-x": 40,
+            "pos-y": 220,
+            "pts-offset": 220
+        },
+        {
+            "place": 8,
+            "pos-x": 40,
+            "pos-y": 250,
+            "pts-offset": 220
+        },
+        {
+            "place": 9,
+            "pos-x": 40,
+            "pos-y": 2220,
+            "pts-offset": 220
+        }
+    ]
+}
