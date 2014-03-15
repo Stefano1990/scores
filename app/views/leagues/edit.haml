@@ -1,0 +1,22 @@
+.page-header
+  %h1= "Edit #{@league.name}"
+= form_for @league, html: { class: 'form-horizontal', multipart: true } do |f|
+  - if @league.background
+    .form-group
+      %label.col-sm-2.control-label Current background
+      .col-sm-10
+        = image_tag @league.background.url, style: 'height: 300px; width: auto;'
+  .form-group
+    = f.label :background, class: 'control-label col-sm-2'
+    .col-sm-10
+      = f.file_field :background, class: 'form-control'
+  .form-group
+    = f.label :config, class: 'control-label col-sm-2'
+    .col-sm-10
+      = f.text_area :config, class: 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit 'Update league', class: 'btn btn-success'
+
+:javascript
+  $('#league_config').ace({ lang: 'javascript' })

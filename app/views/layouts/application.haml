@@ -17,7 +17,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{ href: "#" } Leagues alpha
+          %a.navbar-brand{ href: "#" } Scores alpha
         .navbar-collapse.collapse
           %ul.nav.navbar-nav.navbar-right
             %li
@@ -28,37 +28,26 @@
               %a{href: "#"} Profile
             %li
               %a{href: "#"} Help
+            %li= link_to "Log out", destroy_user_session_path, method: :delete
           %form.navbar-form.navbar-right
             %input.form-control{placeholder: "Search...", type: "text"}/
     .container-fluid
       .row
-        .col-sm-3.col-md-2.sidebar
-          %ul.nav.nav-sidebar
-            %li.active
-              = active_link_to 'Leagues', user_leagues_path(current_user), wrap_tag: :li
-            %li
-              %a{href: "#"} Reports
-            %li
-              %a{href: "#"} Analytics
-            %li
-              %a{href: "#"} Export
-          %ul.nav.nav-sidebar
-            %li
-              %a{href: ""} Nav item
-            %li
-              %a{href: ""} Nav item again
-            %li
-              %a{href: ""} One more nav
-            %li
-              %a{href: ""} Another nav item
-            %li
-              %a{href: ""} More navigation
-          %ul.nav.nav-sidebar
-            %li
-              %a{href: ""} Nav item again
-            %li
-              %a{href: ""} One more nav
-            %li
-              %a{href: ""} Another nav item
+        - if current_user
+          .col-sm-3.col-md-2.sidebar
+            %ul.nav.nav-sidebar
+              %li.active
+                = active_link_to 'Leagues', user_leagues_path(current_user), wrap_tag: :li
+            - if params[:controller] == 'leagues'
+              %ul.nav.nav-sidebar
+                = active_link_to 'Current standings', user_leagues_path(current_user), wrap_tag: :li
+                = active_link_to 'Generated results', user_results_path(current_user), wrap_tag: :li
+            %ul.nav.nav-sidebar
+              %li
+                %a{href: ""} Nav item again
+              %li
+                %a{href: ""} One more nav
+              %li
+                %a{href: ""} Another nav item
         .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
           = yield

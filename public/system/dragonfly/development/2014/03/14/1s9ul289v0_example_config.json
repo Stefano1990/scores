@@ -1,0 +1,16 @@
+{
+    "drivers": [
+        {
+            "place": 1,
+            "pos-x": 200,
+            "pos-y": 200,
+            "pts-offset": 100
+        },
+        {
+            "place": 2,
+            "pos-x": 200,
+            "pos-y": 300,
+            "pts-offset": 100
+        }
+    ]
+}

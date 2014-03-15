@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140202172014) do
+ActiveRecord::Schema.define(:version => 20140314170416) do
 
   create_table "drivers", :force => true do |t|
     t.integer  "pos"
@@ -31,12 +31,35 @@ ActiveRecord::Schema.define(:version => 20140202172014) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "league_configs", :force => true do |t|
+    t.integer  "league_id"
+    t.string   "config_name"
+    t.string   "config_uid"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "leagues", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "url"
+    t.string   "background_name"
+    t.string   "background_uid"
+    t.text     "config"
+  end
+
+  create_table "results", :force => true do |t|
+    t.integer  "league_id"
+    t.string   "background_uid"
+    t.string   "background_name"
+    t.string   "image_uid"
+    t.string   "image_name"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "composite_name"
+    t.string   "composite_uid"
   end
 
   create_table "standing_configs", :force => true do |t|
@@ -49,16 +72,11 @@ ActiveRecord::Schema.define(:version => 20140202172014) do
 
   create_table "standings", :force => true do |t|
     t.integer  "league_id"
-    t.string   "background_uid"
-    t.string   "background_name"
     t.string   "image_uid"
     t.string   "image_name"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.string   "config_uid"
-    t.string   "config_name"
-    t.string   "composite_name"
-    t.string   "composite_uid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "url"
   end
 
   create_table "users", :force => true do |t|

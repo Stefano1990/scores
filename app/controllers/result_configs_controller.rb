@@ -1,4 +1,4 @@
-class StandingConfigsController < ApplicationController
+class ResultConfigsController < ApplicationController
   def new
     @standing = Standing.find(params[:standing_id])
     @standing_config = @standing.build_standing_config

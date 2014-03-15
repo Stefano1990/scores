@@ -1,8 +1,6 @@
 %h1.page-header
   = @league.name
-  = link_to "new results", new_user_league_standings_path(@user, @league), class: 'btn btn-primary pull-right'
-- if !@league.standings.empty?
-  = image_tag @league.standings.first.composite.url if @league.standings.first.composite_stored?
+  = link_to "new results", new_league_standing_path(@league), class: 'btn btn-primary pull-right'
 .table-responsive
   %table.table.table-striped
     %thead

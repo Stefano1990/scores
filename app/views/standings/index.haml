@@ -1,0 +1,25 @@
+%h1.page-header
+  = "Standings for #{@league.name}"
+  - if @league.config && @league.background
+    = link_to "New standing", new_league_standing_path(@league), class: 'btn btn-primary pull-right'
+  - else
+    = link_to "Background or config missing", '#', class: 'btn btn-danger pull-right', disabled: true
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Date generated
+      %th Danlisa URL
+      %th Image URL
+      %th
+  %tbody
+    - @standings.each_with_index do |standing,i|
+      %tr
+        %td= standing.created_at
+        %td= standing.url
+        - if standing.image
+          %td
+            = link_to "Link", standing.image.url, target: '_blank'
+            = #clippy('https://github.com/mojombo/clippy', '#f9f9f9').html_safe
+        %td
+          = link_to 'Refresh', '#'

@@ -1,15 +1,24 @@
 Scores::Application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { sessions: "sessions", registrations: "registrations", passwords: "passwords" }
+
+  root to: 'pages#home'
+  #match 'pages/home' => 'pages#home'
 
   resources :users do
     resources :leagues do
       resource :standings
     end
+    resource :results
   end
 
-  resources :standings do
-    resources :standing_configs
+  resources :leagues do
+    resources :standings
+    resources :results
+    resources :configs
+    resources :backgrounds
   end
+  resources :standings
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -21,6 +21,7 @@ gem 'nokogiri'
 gem 'dragonfly'
 gem 'mini_magick'
 gem 'rmagick'
+gem 'jquery-ace-rails'
 
 
 

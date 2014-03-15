@@ -1,0 +1,16 @@
+.container
+  .col-lg-12
+    %h1 Change your password
+    = form_for(resource, :as => resource_name, :url => password_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f|
+      = devise_error_messages!
+      = f.hidden_field :reset_password_token
+      .form-group
+        = f.label :password, "New password", class: 'col-sm-3 control-label'
+        .col-sm-8= f.password_field :password, type: 'password', class: 'form-control'
+      .form-group
+        = f.label :password_confirmation, "Confirm new password", class: 'col-sm-3 control-label'
+        .col-sm-8= f.password_field :password_confirmation, type: 'password', class: 'form-control'
+      .form-group
+        .col-sm-offset-3.col-sm-10
+          = f.submit "Change my password", class: 'btn btn-default'
+    = render "devise/shared/links"

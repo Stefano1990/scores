@@ -1,7 +1,6 @@
 class LeaguesController < ApplicationController
-  before_filter :find_user
   def index
-    @leagues = @user.leagues
+    @leagues = current_user.leagues
   end
 
   def show
@@ -9,11 +8,11 @@ class LeaguesController < ApplicationController
   end
 
   def new
-    @league = @user.leagues.new
+    @league = current_user.leagues.new
   end
 
   def create
-    @league = @user.leagues.new(params[:league])
+    @league = current_user.leagues.new(params[:league])
     if @league.save
       redirect_to user_leagues_path(@user), flash: { success: "League created." }
     else
@@ -22,13 +21,20 @@ class LeaguesController < ApplicationController
   end
 
   def refresh
-    @league = @user.leagues.find(params[:id])
+    @league = current_user.leagues.find(params[:id])
     @league.refresh
   end
 
+  def edit
+    @league = League.find(params[:id])
+  end
 
-  private
-  def find_user
-    @user = User.find(params[:user_id])
+  def update
+    @league = League.find(params[:id])
+    if @league.update_attributes(params[:league])
+      redirect_to leagues_path, flash: { success: "League was updated." }
+    else
+      render 'edit'
+    end
   end
 end
