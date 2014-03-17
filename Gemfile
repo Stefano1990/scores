@@ -6,9 +6,6 @@ gem 'rails', '3.2.14'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-gem "better_errors"
-gem "binding_of_caller"
-#gem 'local_tunnel'
 gem "quiet_assets"
 gem 'devise'
 gem 'cancan'
@@ -22,8 +19,12 @@ gem 'dragonfly'
 gem 'mini_magick'
 gem 'rmagick'
 gem 'jquery-ace-rails'
+gem 'rb-readline'
 
-
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+end
 
 # Gems used only for assets and not required
 # in production environments by default.

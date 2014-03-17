@@ -12,8 +12,12 @@ Scores::Application.routes.draw do
   end
 
   resources :leagues do
-    resources :standings
-    resources :results
+    resources :standings do
+      get 'refresh' => 'standings#refresh'
+    end
+    resources :results do
+      get 'refresh' => 'results#refresh'
+    end
     resources :configs
     resources :backgrounds
   end

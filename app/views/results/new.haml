@@ -1,0 +1,10 @@
+%h1.page-header= "New results for #{@league.name}"
+= form_for [@league, @result], html: { class: 'form-horizontal' } do |f|
+  = render 'shared/form_errors', form_model: @result
+  .form-group
+    = f.label :url, class: 'control-label col-sm-2'
+    .col-sm-10
+      = f.text_field :url, class: 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit 'Create results', class: 'btn btn-success', disable_with: 'Creating results. Please wait...'

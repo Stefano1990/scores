@@ -1,6 +1,6 @@
 %h1.page-header
   Leagues
-  = link_to "New league", new_user_league_path(current_user), class: 'btn btn-primary pull-right'
+  = link_to "New league", new_user_league_path(current_user), class: 'btn btn-primary'
 %h2.sub-header Active leagues
 .table-responsive
   %table.table.table-striped
@@ -8,7 +8,6 @@
       %tr
         %th #
         %th League name
-        %th crawl URL
         %th last updated
         %th has config
         %th has background
@@ -18,9 +17,8 @@
         %tr
           %td= i+1
           %td= link_to league.name, league_path(league)
-          %td= league.url
           %td= league.updated_at
-          - if league.config.empty?
+          - if league.config.nil? || league.config.empty?
             %td= link_to "No config", edit_league_path(league), class: 'btn btn-danger'
           - else
             %td.no-problem Config found
@@ -28,6 +26,7 @@
             %td= link_to "No background", edit_league_path(league), class: 'btn btn-danger'
           - else
             %td.no-problem Background found
-          %td= link_to "Standings", league_standings_path(league)
-          %td= link_to "Results", league_results_path(league)
-          %td= link_to "Edit", edit_league_path(league), class: 'btn btn-primary'
+          %td= link_to "Standings (#{league.standings.count})", league_standings_path(league), class: 'btn btn-primary'
+          %td= link_to "Results (#{league.results.count})", league_results_path(league), class: 'btn btn-primary'
+          %td= link_to 'Destroy', league_path(league), confirm: 'Are you sure you want to delete this league irreversibly? The images will NOT be deleted.', class: 'btn btn-danger', method: :delete
+          %td= link_to "Edit", edit_league_path(league), class: 'btn btn-warning'

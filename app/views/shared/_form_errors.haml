@@ -1,0 +1,10 @@
+- if form_model.errors.any?
+  .alert.alert-danger
+    %h4
+      - if form_model.errors.count == 1
+        There is 1 error that needs to be checked:
+      - else
+        = "There are #{pluralize(form_model.errors.count, 'error')} that need to be checked:"
+    %ul
+      - form_model.errors.full_messages.each do |msg|
+        %li= msg
