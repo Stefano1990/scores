@@ -1,1 +1,10 @@
-%h1 asdf
+%h1.page-header
+  = "Results for #{link_to @league.name, league_path(@league)}".html_safe
+  - if @league.config && @league.background
+    = link_to "New result", new_league_result_path(@league), class: 'btn btn-primary pull-right'
+  - else
+    = link_to "Background or config missing", '#', class: 'btn btn-danger pull-right', disabled: true
+%ol.breadcrumb
+  %li= link_to "Leagues", leagues_path
+  %li.active= @league.name
+= render 'results_table'

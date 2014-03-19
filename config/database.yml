@@ -17,6 +17,7 @@ development:
   encoding: unicode
   database: scores_development
   pool: 5
+  host: localhost
   username: scores
   password: scores
 
@@ -43,6 +44,7 @@ test:
   encoding: unicode
   database: scores_test
   pool: 5
+  host: localhost
   username: scores
   password: scores
 
@@ -51,5 +53,6 @@ production:
   encoding: unicode
   database: scores_production
   pool: 5
+  host: localhost
   username: scores
   password: scores

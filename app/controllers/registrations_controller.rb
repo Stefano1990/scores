@@ -1,3 +1,3 @@
-class RegistrationsController < Devise::SessionsController
+class RegistrationsController < Devise::RegistrationsController
   layout 'pages'
 end

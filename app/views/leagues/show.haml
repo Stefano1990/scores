@@ -1,21 +1,12 @@
 %h1.page-header
   = @league.name
-  = link_to "new results", new_league_standing_path(@league), class: 'btn btn-primary pull-right'
-.table-responsive
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Pos
-        %th Driver
-        %th Team
-        %th Starts
-        %th Wins
-        %th Top-5
-        %th Top-10
-        %th Tot Points
-        %th Bns Pts
-        %th Laps
-        %th Beh Lead
-        %th Beh Next
-    %tbody
-      = render @league.drivers
+  = link_to "new results", new_league_result_path(@league), class: 'btn btn-primary'
+  = link_to "new standings", new_league_standing_path(@league), class: 'btn btn-primary'
+  = link_to "Edit", edit_league_path(@league), class: 'btn btn-warning'
+%ol.breadcrumb
+  %li= link_to "Leagues", leagues_path
+  %li.active= @league.name
+%h3 Results
+= render 'results/results_table'
+%h3 Standings
+= render 'standings/standings_table'
