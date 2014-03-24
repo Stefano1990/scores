@@ -1,12 +1,15 @@
 class League < ActiveRecord::Base
+  include ImageComposer
+
   belongs_to      :user
   has_many        :drivers
   has_many        :standings
   has_many        :results
 
   dragonfly_accessor :background
+  dragonfly_accessor :preview
 
-  attr_accessible   :name, :user_id, :url, :config, :background, :background_uid
+  attr_accessible   :name, :user_id, :url, :config, :background, :background_uid, :preview
   validate          :name, presence: true
 
   def get_driver_list(url_to_parse)
@@ -44,4 +47,6 @@ class League < ActiveRecord::Base
       standing.save
     end
   end
+
+
 end

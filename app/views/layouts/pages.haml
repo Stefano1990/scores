@@ -17,13 +17,12 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{href: root_path} scores ALPHA
+          %a.navbar-brand{href: root_path} scores alpha
         / Collect the nav links, forms, and other content for toggling
         .collapse.navbar-collapse.navbar-ex1-collapse
           %ul.nav.navbar-nav
+            %li= link_to 'FAQ', pages_faq_path
             %li= link_to "Register", new_user_session_path
-            %li
-              %a{href: "#services"} Services
             %li
               %a{href: "#contact"} Contact
           - if current_user
@@ -37,5 +36,5 @@
       / /.container
     .full-width-image-1
       .logo-wrapper
-        %img.img-responsive{src: "http://placehold.it/200x200&text=Logo"}/
+        //%img.img-responsive{src: "http://placehold.it/200x200&text=Logo"}/
     = yield

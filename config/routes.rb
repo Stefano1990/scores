@@ -2,6 +2,7 @@ Scores::Application.routes.draw do
   devise_for :users, controllers: { sessions: "sessions", registrations: "registrations", passwords: "passwords" }
 
   root to: 'pages#home'
+  get 'pages/faq' => 'pages#faq'
   #match 'pages/home' => 'pages#home'
 
   resources :users do

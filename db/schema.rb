@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140316114615) do
+ActiveRecord::Schema.define(:version => 20140319163630) do
 
   create_table "drivers", :force => true do |t|
     t.integer  "pos"
@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(:version => 20140316114615) do
     t.string   "background_name"
     t.string   "background_uid"
     t.text     "config"
+    t.string   "preview_uid"
+    t.string   "preview_name"
   end
 
   create_table "results", :force => true do |t|

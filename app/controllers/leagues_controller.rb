@@ -35,16 +35,23 @@ class LeaguesController < ApplicationController
     begin
       @league = League.find(params[:id])
       config = JSON.parse(params[:league][:config]) # Check if the config is valid.
-      if @league.config != params[:league][:config]
-        config_has_changed = true
-      end
-      if @league.update_attributes(params[:league])
-        if config_has_changed
-          @league.expire_standings_and_results!
-        end
-        redirect_to leagues_path, flash: { success: "League was updated." }
-      else
+
+      if params[:commit] == "Preview" # Only preview, don't save the config yet.
+        @league.config = params[:league][:config]
+        @league.generate_preview
         render 'edit'
+      else
+        if @league.config != params[:league][:config]
+          config_has_changed = true
+        end
+        if @league.update_attributes(params[:league])
+          if config_has_changed
+            @league.expire_standings_and_results!
+          end
+          redirect_to leagues_path, flash: { success: "League was updated." }
+        else
+          render 'edit'
+        end
       end
     rescue JSON::ParserError
       flash[:error] = 'Config contains JSON errors. (Check line numbers for i and X)'

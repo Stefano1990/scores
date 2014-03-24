@@ -1,0 +1,28 @@
+{
+    "drivers": [
+        {"Pos":"1","Driver":"Sebastian Vettel","Nationality":"German","Team":"Red Bull Racing-Renault","Points":"397"},
+        {"Pos":"2","Driver":"Fernando Alonso","Nationality":"Spanish","Team":"Ferrari","Points":"242"},
+        {"Pos":"3","Driver":"Mark Webber","Nationality":"Australian","Team":"Red Bull Racing-Renault","Points":"199"},
+        {"Pos":"4","Driver":"Lewis Hamilton","Nationality":"British","Team":"Mercedes","Points":"189"},
+        {"Pos":"5","Driver":"Kimi Räikkönen","Nationality":"Finnish","Team":"Lotus-Renault","Points":"183"},
+        {"Pos":"6","Driver":"Nico Rosberg","Nationality":"German","Team":"Mercedes","Points":"171"},
+        {"Pos":"7","Driver":"Romain Grosjean","Nationality":"French","Team":"Lotus-Renault","Points":"132"},
+        {"Pos":"8","Driver":"Felipe Massa","Nationality":"Brazilian","Team":"Ferrari","Points":"112"},
+        {"Pos":"9","Driver":"Jenson Button","Nationality":"British","Team":"McLaren-Mercedes","Points":"73"},
+        {"Pos":"10","Driver":"Nico Hulkenberg","Nationality":"German","Team":"Sauber-Ferrari","Points":"51"},
+        {"Pos":"11","Driver":"Sergio Perez","Nationality":"Mexican","Team":"McLaren-Mercedes","Points":"49"},
+        {"Pos":"12","Driver":"Paul di Resta","Nationality":"British","Team":"Force India-Mercedes","Points":"48"},
+        {"Pos":"13","Driver":"Adrian Sutil","Nationality":"German","Team":"Force India-Mercedes","Points":"29"},
+        {"Pos":"14","Driver":"Daniel Ricciardo","Nationality":"Australian","Team":"STR-Ferrari","Points":"20"},
+        {"Pos":"15","Driver":"Jean-Eric Vergne","Nationality":"French","Team":"STR-Ferrari","Points":"13"},
+        {"Pos":"16","Driver":"Esteban Gutierrez","Nationality":"Mexican","Team":"Sauber-Ferrari","Points":"6"},
+        {"Pos":"17","Driver":"Valtteri  Bottas","Nationality":"Finnish","Team":"Williams-Renault","Points":"4"},
+        {"Pos":"18","Driver":"Pastor Maldonado","Nationality":"Venezuelan","Team":"Williams-Renault","Points":"1"},
+        {"Pos":"19","Driver":"Jules Bianchi","Nationality":"French","Team":"Marussia-Cosworth","Points":"0"},
+        {"Pos":"20","Driver":"Charles Pic","Nationality":"French","Team":"Caterham-Renault","Points":"0"},
+        {"Pos":"21","Driver":"Heikki Kovalainen","Nationality":"Finnish","Team":"Lotus-Renault","Points":"0"},
+        {"Pos":"22","Driver":"Giedo van der Garde","Nationality":"Dutch","Team":"Caterham-Renault","Points":"0"},
+        {"Pos":"23","Driver":"Max Chilton","Nationality":"British","Team":"Marussia-Cosworth","Points":"0"},
+        {"Pos":"24","Driver":"Stephan Hug","Nationality":"Swiss","Team":"Sauber ;)","Points":"9000"}
+    ]
+}
