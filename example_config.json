@@ -1,16 +1,23 @@
 {
-    "drivers": [
-        {
-            "place": 1,
-            "pos-x": 200,
-            "pos-y": 200,
-            "pts-offset": 100
-        },
-        {
-            "place": 2,
-            "pos-x": 200,
-            "pos-y": 300,
-            "pts-offset": 100
-        }
-    ]
+    "general": {
+        "font": "Roboto-Regular.ttf",
+        "color": "#FFFFFF",
+        "font-size": 32,
+        "line-height": 48,
+        "entries": 8,
+        "positions": true,
+        "scores": true
+    },
+    "positions": {
+        "x-pos": 240,
+        "y-pos": 200
+    },
+    "drivers": {
+        "x-pos": 320,
+        "y-pos": 200
+    },
+    "scores": {
+        "x-pos": 1000,
+        "y-pos": 200
+    }
 }

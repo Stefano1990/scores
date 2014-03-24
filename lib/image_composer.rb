@@ -61,7 +61,7 @@ module ImageComposer
         )
         #driver_name = driver_name.convert('-density 288 -resize 25%')
         driver_name_image = MiniMagick::Image.open(driver_name.path)
-        _image = _image.composite(driver_name_image) { |c| c.compose "Over"; c.geometry "+#{driver['pos-x']}+#{driver['pos-y']}" }
+        _image = _image.composite(driver_name_image) { |c| c.compose "Over"; c.geometry "+#{driver['pos-x'].to_s}+#{driver['pos-y'].to_s}" }
         # generate the points
         points_text = Dragonfly.app.generate(:text, league_driver.tot_pts.to_s,
                                              'font-size' => config['general']['font-size'], # defaults to 12

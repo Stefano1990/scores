@@ -14,7 +14,10 @@
         .form-group
           %label.col-sm-2.control-label Preview
           .col-sm-10
-            = image_tag @league.preview.url, class: 'img-responsive'
+            - if @league.preview
+              = image_tag @league.preview.url, class: 'img-responsive'
+            - else
+              .alert.alert-info Preview not generated.
   .form-group
     = f.label :background, class: 'control-label col-sm-2'
     .col-sm-10
