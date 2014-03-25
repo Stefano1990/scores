@@ -100,3 +100,15 @@ td.no-problem {
   color: #468847;
   background-color: #dff0d8 !important;
 }
+.leagues-navi {
+  li.new {
+    a { color: #468847; }
+  }
+  li.new:hover, li.new:active {
+    a { color: #468847; }
+  }
+  li.edit {
+    a { color: #f0ad4e; }
+    border-color: #eea236;
+  }
+}

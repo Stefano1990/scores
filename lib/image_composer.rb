@@ -45,10 +45,10 @@ module ImageComposer
   def make_image
     if league.config && league.background
       background = league.background
-      config = league.config
-      _image = MiniMagick::Image.open(background.path)
-      config = JSON.parse(config) # read the config
+      config = JSON.parse(league.config)
+      canvas = MiniMagick::Image.open(background.path)
       drivers = extract_driver_list
+
       config['drivers'].each_with_index do |driver, i|
         # find the driver in the league
         league_driver = drivers[i]
@@ -100,7 +100,7 @@ module ImageComposer
       if parsed_config["general"]["scores"]
         x = parsed_config["scores"]["x-pos"]
         y = parsed_config["scores"]["y-pos"]+(i*line_height)
-        score = Dragonfly.app.generate(:text, drivers[i]["Points"].to_s, font_attributes)
+        score = Dragonfly.app.generate(:multiline,'aasdfasdf \n asdfasdf')
         score_image = MiniMagick::Image.open(score.path)
         canvas = canvas.composite(score_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
       end
@@ -110,6 +110,13 @@ module ImageComposer
         position = Dragonfly.app.generate(:text, drivers[i]["Pos"].to_s, font_attributes)
         position_image = MiniMagick::Image.open(position.path)
         canvas = canvas.composite(position_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
+      end
+      if parsed_config["general"]["teams"]
+        x = parsed_config["teams"]["x-pos"]
+        y = parsed_config["teams"]["y-pos"]+(i*line_height)
+        team = Dragonfly.app.generate(:text, drivers[i]["Team"].to_s, font_attributes)
+        team_image = MiniMagick::Image.open(team.path)
+        canvas = canvas.composite(team_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
       end
       x = parsed_config["drivers"]["x-pos"]
       y = parsed_config["drivers"]["y-pos"]+(i*line_height)
