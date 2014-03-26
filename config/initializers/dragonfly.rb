@@ -1,4 +1,5 @@
 require 'dragonfly'
+require 'multiline'
 
 # Configure
 Dragonfly.app.configure do

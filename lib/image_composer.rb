@@ -86,44 +86,77 @@ module ImageComposer
 
   def generate_preview
     # load sample data.
-    drivers = JSON.parse(File.read("#{Rails.root}/driver-samples.json"))["drivers"]
+    all_drivers = JSON.parse(File.read("#{Rails.root}/driver-samples.json"))["drivers"]
     #if config && background
     canvas = MiniMagick::Image.open(background.path)
     parsed_config = JSON.parse(config)
-    font_attributes = {   'font-size' => parsed_config["general"]["font-size"],
+    font_attributes = {   'font_size' => parsed_config["general"]["font-size"],
                           'color' => parsed_config["general"]["color"],
                           'font' => "#{Rails.root}/public/images/fonts/#{parsed_config["general"]["font"]}",
-                          'line-height' => parsed_config["general"]["line-height"]
+                          #'line-height' => parsed_config["general"]["line-height"]
                       }
-    line_height = parsed_config["general"]["line-height"]
-    parsed_config["general"]["entries"].times do |i|
-      if parsed_config["general"]["scores"]
-        x = parsed_config["scores"]["x-pos"]
-        y = parsed_config["scores"]["y-pos"]+(i*line_height)
-        score = Dragonfly.app.generate(:multiline,'aasdfasdf \n asdfasdf')
-        score_image = MiniMagick::Image.open(score.path)
-        canvas = canvas.composite(score_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
-      end
-      if parsed_config["general"]["positions"]
-        x = parsed_config["positions"]["x-pos"]
-        y = parsed_config["positions"]["y-pos"]+(i*line_height)
-        position = Dragonfly.app.generate(:text, drivers[i]["Pos"].to_s, font_attributes)
-        position_image = MiniMagick::Image.open(position.path)
-        canvas = canvas.composite(position_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
-      end
-      if parsed_config["general"]["teams"]
-        x = parsed_config["teams"]["x-pos"]
-        y = parsed_config["teams"]["y-pos"]+(i*line_height)
-        team = Dragonfly.app.generate(:text, drivers[i]["Team"].to_s, font_attributes)
-        team_image = MiniMagick::Image.open(team.path)
-        canvas = canvas.composite(team_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
-      end
-      x = parsed_config["drivers"]["x-pos"]
-      y = parsed_config["drivers"]["y-pos"]+(i*line_height)
-      driver_name = Dragonfly.app.generate(:text, drivers[i]["Driver"].to_s, font_attributes)
-      driver_name_image = MiniMagick::Image.open(driver_name.path)
-      canvas = canvas.composite(driver_name_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
+    y = parsed_config["general"]["y-pos"]
+    drivers = []
+    parsed_config["general"]["entries"].times {|i| drivers << all_drivers[i] }
+    if parsed_config["general"]["positions"]
+      x = parsed_config["positions"]["x-pos"]
+      string = ""
+      font_attributes['color'] = parsed_config["positions"]["color"] || font_attributes['color']
+      drivers.each{|d| string << "#{d["Pos"]}\n" }
+      positions = Dragonfly.app.generate(:multiline,string,font_attributes)
+      positions_image = MiniMagick::Image.open(positions.path)
+      canvas = canvas.composite(positions_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
     end
+    if parsed_config["general"]["teams"]
+      x = parsed_config["teams"]["x-pos"]
+      string = ""
+      drivers.each{|d| string << "#{d["Team"]}\n" }
+      font_attributes['color'] = "#FFFFFF"
+      teams = Dragonfly.app.generate(:multiline,string,font_attributes)
+      teams_image = MiniMagick::Image.open(teams.path)
+      canvas = canvas.composite(teams_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
+    end
+    if parsed_config["general"]["scores"]
+      x = parsed_config["scores"]["x-pos"]
+      string = ""
+      drivers.each{|d| string << "#{d["Points"]}\n" }
+      scores = Dragonfly.app.generate(:multiline,string,font_attributes)
+      score_image = MiniMagick::Image.open(scores.path)
+      canvas = canvas.composite(score_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
+    end
+    x = parsed_config["drivers"]["x-pos"]
+    string = ""
+    drivers.each{|d| string << "#{d["Driver"]}\n" }
+    names = Dragonfly.app.generate(:multiline,string,font_attributes)
+    names_image = MiniMagick::Image.open(names.path)
+    canvas = canvas.composite(names_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
+    #  if parsed_config["general"]["scores"]
+    #    x = parsed_config["scores"]["x-pos"]
+    #    y = parsed_config["scores"]["y-pos"]+(i*line_height)
+    #    score = Dragonfly.app.generate(:multiline,'aasdfasdf \n asdfasdf',font_attributes)
+    #    score_image = MiniMagick::Image.open(score.path)
+    #    canvas = canvas.composite(score_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
+    #  end
+    #  if parsed_config["general"]["positions"]
+    #    x = parsed_config["positions"]["x-pos"]
+    #    y = parsed_config["positions"]["y-pos"]+(i*line_height)
+    #    position = Dragonfly.app.generate(:text, drivers[i]["Pos"].to_s, font_attributes)
+    #    position_image = MiniMagick::Image.open(position.path)
+    #    canvas = canvas.composite(position_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
+    #  end
+    #  if parsed_config["general"]["teams"]
+    #    x = parsed_config["teams"]["x-pos"]
+    #    y = parsed_config["teams"]["y-pos"]+(i*line_height)
+    #    team = Dragonfly.app.generate(:text, drivers[i]["Team"].to_s, font_attributes)
+    #    team_image = MiniMagick::Image.open(team.path)
+    #    canvas = canvas.composite(team_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
+    #  end
+    #  x = parsed_config["drivers"]["x-pos"]
+    #  y = parsed_config["drivers"]["y-pos"]+(i*line_height)
+    #  driver_name = Dragonfly.app.generate(:text, drivers[i]["Driver"].to_s, font_attributes)
+    #  driver_name_image = MiniMagick::Image.open(driver_name.path)
+    #  canvas = canvas.composite(driver_name_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
+    #end
     canvas.write("#{background.path.sub(/.png/, '')}-generated.png") # overwrite the old attachment. remove the last .png
     self.update_attribute(:preview, Pathname.new("#{background.path.sub(/.png/, '')}-generated.png"))
     #self.save
