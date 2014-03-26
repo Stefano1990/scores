@@ -1,8 +1,6 @@
 Dragonfly.app.configure do
   generator :multiline do |content, text, opts={}|
     args  = []
-    drivers = ["mike", "bob","jim"]
-    drivers_string = compose_driver_string(drivers)
     font_size = (opts['font_size'] || 12).to_i
     background = opts['background_color'] || 'none'
 
@@ -19,13 +17,5 @@ Dragonfly.app.configure do
 
     content.generate!(:convert, args.join(' '), 'png')
     content.add_meta('format' => 'png', 'name' => "text.png")
-  end
-
-  def compose_driver_string(drivers)
-    string = ""
-    drivers.each do |driver|
-      string << "mike \n"
-    end
-    string
   end
 end
