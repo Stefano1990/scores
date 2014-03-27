@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140327141408) do
+ActiveRecord::Schema.define(:version => 20140327153020) do
 
   create_table "drivers", :force => true do |t|
     t.integer  "pos"
@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(:version => 20140327141408) do
     t.string   "url"
     t.string   "status"
     t.string   "image_public_url"
+    t.integer  "first_entry"
+    t.integer  "last_entry"
   end
 
   create_table "standing_configs", :force => true do |t|

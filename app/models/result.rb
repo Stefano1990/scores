@@ -3,8 +3,9 @@ class Result < ActiveRecord::Base
 
   belongs_to  :league
   dragonfly_accessor  :image
-  attr_accessible     :url, :league_id, :image_name, :image_uid
+  attr_accessible     :url, :league_id, :image_name, :image_uid, :first_entry, :last_entry
   validate            :url, :check_url
+  validates            :first_entry, :last_entry, inclusion: 1..120
 
   after_create        :make_image
 

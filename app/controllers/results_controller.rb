@@ -29,4 +29,13 @@ class ResultsController < ApplicationController
       render 'refresh-error', layout: false
     end
   end
+
+  def destroy
+    @result = Result.find(params[:id])
+    if @result.destroy
+      redirect_to league_results_path(@result.league), flash: { success: "Results destroyed." }
+    else
+      redirect_to league_results_path(@result.league), flash: { error: "Results were not destroyed." }
+    end
+  end
 end
