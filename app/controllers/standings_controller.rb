@@ -31,4 +31,11 @@ class StandingsController < ApplicationController
       render 'refresh-error', layout: false
     end
   end
+
+  def destroy
+    @standing = Standing.find(params[:id])
+    if @standing.destroy
+      redirect_to league_standings_path(@standing.league), flash: { success: "Standings deleted." }
+    end
+  end
 end

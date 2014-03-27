@@ -13,6 +13,7 @@ Dragonfly.app.configure do
     args.push("-fill #{opts['color']}") if opts['color']
     args.push("-stroke #{opts['stroke_color']}") if opts['stroke_color']
     args.push("-background #{background}")
+    args.push("-interline-spacing #{opts['interline-spacing']}")
     args.push("label:'#{text}'")
 
     content.generate!(:convert, args.join(' '), 'png')

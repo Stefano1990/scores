@@ -17,4 +17,6 @@ class Standing < ActiveRecord::Base
       errors.add(:url, "please check your url. This URL looks like a results URL.")
     end
   end
+
+
 end

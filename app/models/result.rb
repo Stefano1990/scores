@@ -13,4 +13,6 @@ class Result < ActiveRecord::Base
       errors.add(:url, "please check your url. This URL looks like a standings URL.")
     end
   end
+
+
 end

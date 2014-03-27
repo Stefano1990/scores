@@ -32,10 +32,10 @@ module ImageComposer
           if i < max_drivers
             driver = Driver.new
             driver.pos = row.children[0].text.to_i
-            driver.name = row.children[1].text
-            driver.team = row.children[2].text
-            driver.starts = row.children[3].text.to_i
-            driver.wins = row.children[4].text.to_i
+            driver.name = row.children[2].text
+            driver.team = row.children[3].text
+            driver.starts = row.children[4].text.to_i
+            driver.wins = row.children[7].text.to_i
             driver.top5 = row.children[5].text.to_i
             driver.top10 = row.children[6].text.to_i
             driver.tot_pts = row.children[7].text.to_i
@@ -58,11 +58,7 @@ module ImageComposer
       @config = JSON.parse(league.config)
       @canvas = MiniMagick::Image.open(background.path)
       @drivers = extract_driver_list
-
-      @font_attributes = {   'font_size' => @config["general"]["font_size"],
-                             'color' => @config["general"]["color"],
-                             'font' => "#{Rails.root}/public/images/fonts/#{@config["general"]["font"]}",
-                         }
+      @font_attributes = font_attributes_hash
       compose_sub_image('pos','positions') if @config["general"]['positions']
       compose_sub_image('name','names') if @config["general"]['names']
       compose_sub_image('team','teams') if @config["general"]['teams']
@@ -70,110 +66,32 @@ module ImageComposer
 
       @canvas.write("#{background.path.sub(/.png/, '')}-generated.png") # overwrite the old attachment. remove the last .png
       self.image = Pathname.new("#{background.path.sub(/.png/, '')}-generated.png")
+      image.to_file("#{Rails.root}/public/system/dragonfly/#{Rails.env}/#{id}.png")
+      self.image_public_url = "/system/dragonfly/#{Rails.env}/#{id}.png"
       self.status = 'ok'
       self.save
-      #
-      #  x = parsed_config["positions"]["x-pos"]
-      #  string = ""
-      #  font_attributes['color'] = parsed_config["positions"]["color"] || font_attributes['color']
-      #  drivers.each{|d| string << "#{d["Pos"]}\n" }
-      #  positions = Dragonfly.app.generate(:multiline,string,font_attributes)
-      #  positions_image = MiniMagick::Image.open(positions.path)
-      #  canvas = canvas.composite(positions_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
-      #if parsed_config["general"]["teams"]
-      #  compose_sub_image(drivers, "teams")
-      #  x = parsed_config["teams"]["x-pos"]
-      #  string = ""
-      #  drivers.each{|d| string << "#{d["Team"]}\n" }
-      #  font_attributes['color'] = "#FFFFFF"
-      #  teams = Dragonfly.app.generate(:multiline,string,font_attributes)
-      #  teams_image = MiniMagick::Image.open(teams.path)
-      #  canvas = canvas.composite(teams_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
-      #end
-      #
-      #config['drivers'].each_with_index do |driver, i|
-      #  # find the driver in the league
-      #  league_driver = drivers[i]
-      #  # generate the name
-      #  driver_name = Dragonfly.app.generate(:text, league_driver.name,
-      #                                       'font-size' => config['general']['font-size'],# defaults to 12
-      #                                       'font' => "#{Rails.root}/public/images/fonts/#{config['general']['font']}",
-      #                                       'color' => config['general']['color'],
-      #                                       'padding' => '30 20 10'
-      #  )
-      #  #driver_name = driver_name.convert('-density 288 -resize 25%')
-      #  driver_name_image = MiniMagick::Image.open(driver_name.path)
-      #  _image = _image.composite(driver_name_image) { |c| c.compose "Over"; c.geometry "+#{driver['pos-x'].to_s}+#{driver['pos-y'].to_s}" }
-      #  # generate the points
-      #  points_text = Dragonfly.app.generate(:text, league_driver.tot_pts.to_s,
-      #                                       'font-size' => config['general']['font-size'], # defaults to 12
-      #                                       'font' => "#{Rails.root}/public/images/fonts/#{config['general']['font']}",
-      #                                       'color' => config['general']['color'],
-      #                                       'padding' => '30 20 10'
-      #                                       #'stroke-color' => '#ddd',
-      #                                       #'font-style' => 'italic',
-      #                                       #'font-stretch' => 'expanded',
-      #                                       #'font-weight' => 'bold',
-      #  )
-      #  points_text.apply
-      #  points_text_image = MiniMagick::Image.open(points_text.path)
-      #  _image = _image.composite(points_text_image) { |c| c.compose "Over"; c.geometry "+#{driver['pos-x'].to_i+driver['pts-offset'].to_i}+#{driver['pos-y']}" }
-      #end
-      #_image.write("#{background.path.sub(/.png/, '')}-generated.png") # overwrite the old attachment. remove the last .png
-      #self.image = Pathname.new("#{background.path.sub(/.png/, '')}-generated.png")
-      #self.status = 'ok'
-      #self.save
     end
   end
 
   def generate_preview
+    @config = JSON.parse(config)
     # load sample data.
-    all_drivers = JSON.parse(File.read("#{Rails.root}/driver-samples.json"))["drivers"]
+    driver_data = JSON.parse(File.read("#{Rails.root}/driver-samples.json"))["drivers"]
+    @drivers = []
+    driver_data.each_with_index do |d,i|
+      if i < @config['general']['entries']
+        @drivers.push(Driver.new(name: d['Driver'], pos: d['Pos'], team: d['Team'], tot_pts: d['Points']))
+      end
+    end
     #if config && background
-    canvas = MiniMagick::Image.open(background.path)
-    parsed_config = JSON.parse(config)
-    font_attributes = {   'font_size' => parsed_config["general"]["font-size"],
-                          'color' => parsed_config["general"]["color"],
-                          'font' => "#{Rails.root}/public/images/fonts/#{parsed_config["general"]["font"]}",
-                          #'line-height' => parsed_config["general"]["line-height"]
-                      }
-    y = parsed_config["general"]["y-pos"]
-    drivers = []
-    parsed_config["general"]["entries"].times {|i| drivers << all_drivers[i] }
-    if parsed_config["general"]["positions"]
-      x = parsed_config["positions"]["x-pos"]
-      string = ""
-      font_attributes['color'] = parsed_config["positions"]["color"] || font_attributes['color']
-      drivers.each{|d| string << "#{d["Pos"]}\n" }
-      positions = Dragonfly.app.generate(:multiline,string,font_attributes)
-      positions_image = MiniMagick::Image.open(positions.path)
-      canvas = canvas.composite(positions_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
-    end
-    if parsed_config["general"]["teams"]
-      x = parsed_config["teams"]["x-pos"]
-      string = ""
-      drivers.each{|d| string << "#{d["Team"]}\n" }
-      font_attributes['color'] = "#FFFFFF"
-      teams = Dragonfly.app.generate(:multiline,string,font_attributes)
-      teams_image = MiniMagick::Image.open(teams.path)
-      canvas = canvas.composite(teams_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
-    end
-    if parsed_config["general"]["scores"]
-      x = parsed_config["scores"]["x-pos"]
-      string = ""
-      drivers.each{|d| string << "#{d["Points"]}\n" }
-      scores = Dragonfly.app.generate(:multiline,string,font_attributes)
-      score_image = MiniMagick::Image.open(scores.path)
-      canvas = canvas.composite(score_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
-    end
-    x = parsed_config["names"]["x-pos"]
-    string = ""
-    drivers.each{|d| string << "#{d["Driver"]}\n" }
-    names = Dragonfly.app.generate(:multiline,string,font_attributes)
-    names_image = MiniMagick::Image.open(names.path)
-    canvas = canvas.composite(names_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
+    @canvas = MiniMagick::Image.open(background.path)
+    @font_attributes = font_attributes_hash
+    compose_sub_image('pos','positions') if @config["general"]['positions']
+    compose_sub_image('name','names') if @config["general"]['names']
+    compose_sub_image('team','teams') if @config["general"]['teams']
+    compose_sub_image('tot_pts','scores') if @config["general"]['scores']
 
-    canvas.write("#{background.path.sub(/.png/, '')}-generated.png") # overwrite the old attachment. remove the last .png
+    @canvas.write("#{background.path.sub(/.png/, '')}-generated.png")
     self.update_attribute(:preview, Pathname.new("#{background.path.sub(/.png/, '')}-generated.png"))
   end
 
@@ -190,10 +108,23 @@ module ImageComposer
 
   def combine_font_properties(attribute)
     font_attributes = {}
-    font_atts = ['font','color','font_size']
-    font_atts.each do |font_attribute|
-      font_attributes[font_attribute] = @config[attribute][font_attribute] || @font_attributes[font_attribute]
+    if @config[attribute]['font']
+      font_attributes['font'] = "#{Rails.root}/public/images/fonts/#{@config[attribute]['font']}"
+    else
+      font_attributes['font'] = "#{Rails.root}/public/images/fonts/#{@config['general']['font']}"
     end
+    font_attributes['color'] = @config[attribute]['color'] || @font_attributes['color']
+    font_attributes['font_size'] = @config[attribute]['font_size'] || @font_attributes['font_size']
+    font_attributes['interline-spacing'] = @config[attribute]['interline-spacing'] || @font_attributes['interline-spacing']
     font_attributes
+  end
+
+  def font_attributes_hash
+    {
+        'font_size' => @config["general"]["font_size"],
+        'color' => @config["general"]["color"],
+        'font' => "#{Rails.root}/public/images/fonts/#{@config["general"]["font"]}",
+        'interline-spacing' => @config["general"]["interline-spacing"] || @config['general']['font_size'],
+    }
   end
 end

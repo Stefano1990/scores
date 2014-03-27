@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140319163630) do
+ActiveRecord::Schema.define(:version => 20140327141408) do
 
   create_table "drivers", :force => true do |t|
     t.integer  "pos"
@@ -61,12 +61,13 @@ ActiveRecord::Schema.define(:version => 20140319163630) do
 
   create_table "results", :force => true do |t|
     t.integer  "league_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "image_name"
     t.string   "image_uid"
     t.string   "url"
     t.string   "status"
+    t.string   "image_public_url"
   end
 
   create_table "standing_configs", :force => true do |t|
@@ -81,10 +82,11 @@ ActiveRecord::Schema.define(:version => 20140319163630) do
     t.integer  "league_id"
     t.string   "image_uid"
     t.string   "image_name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "url"
     t.string   "status"
+    t.string   "image_public_url"
   end
 
   create_table "users", :force => true do |t|
