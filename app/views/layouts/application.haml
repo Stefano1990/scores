@@ -34,15 +34,16 @@
               %li.new= link_to "New league".html_safe, new_league_path
               - current_user.leagues.each do |league|
                 %li.nav-divider
-                - if league_displayed?(league)
-                  %li.active= link_to league.name, league_path(league)
-                  %li.edit= link_to "Edit #{league.name}", edit_league_path(league)
-                  %li.new= link_to "New results", new_league_result_path(league)
-                  %li.new= link_to "New standing", new_league_standing_path(league)
-                  %li= link_to "Results", league_results_path(league)
-                  %li= link_to "Standings", league_standings_path(league)
-                - else
-                  %li= link_to league.name, league_path(league)
+                - unless league.new_record?
+                  - if league_displayed?(league)
+                    %li.active= link_to league.name, league_path(league)
+                    %li.edit= link_to "Edit #{league.name}", edit_league_path(league)
+                    %li.new= link_to "New results", new_league_result_path(league)
+                    %li.new= link_to "New standing", new_league_standing_path(league)
+                    %li= link_to "Results", league_results_path(league)
+                    %li= link_to "Standings", league_standings_path(league)
+                  - else
+                    %li= link_to league.name, league_path(league)
               -#  = active_link_to "<span class='glyphicon glyphicon-th-list'></span> All Leagues".html_safe, leagues_path, wrap_tag: :li
             -#
             -#  = active_link_to "<span class='glyphicon glyphicon-th-list'></span> New league".html_safe, leagues_path, wrap_tag: :li

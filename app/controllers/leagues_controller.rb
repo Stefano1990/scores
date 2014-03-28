@@ -58,6 +58,14 @@ class LeaguesController < ApplicationController
       @league.config = params[:league][:config]
       render 'edit'
     end
+  end
 
+  def destroy
+    @league = League.find(params[:id])
+    if @league.destroyed
+      redirect_to leagues_path, flash: { success: "League destroyed." }
+    else
+      redirect_to leagues_path, flash: { error: "League was not destroyed." }
+    end
   end
 end

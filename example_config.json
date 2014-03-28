@@ -2,22 +2,30 @@
     "general": {
         "font": "Roboto-Regular.ttf",
         "color": "#FFFFFF",
-        "font-size": 32,
-        "line-height": 48,
-        "entries": 8,
+        "font_size": 30,
+        "entries": 12,
         "positions": true,
-        "scores": true
+        "names": true,
+        "scores": true,
+        "teams": true,
+        "y-pos": 188,
+        "interline-spacing": 0
     },
     "positions": {
-        "x-pos": 240,
-        "y-pos": 200
+        "x-pos": 230,
+        "color": "#347BB9"
     },
-    "drivers": {
-        "x-pos": 320,
-        "y-pos": 200
+    "names": {
+        "x-pos": 295
+    },
+    "teams" : {
+        "x-pos": 620,
+        "font": "Roboto-Light.ttf",
+        "interline-spacing": 0,
+        "color": "#b94a48"
     },
     "scores": {
         "x-pos": 1000,
-        "y-pos": 200
+        "font": "RobotoCondensed-BoldItalic.ttf"
     }
 }
