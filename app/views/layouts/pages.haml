@@ -25,7 +25,7 @@
             %li= link_to 'FAQ', pages_faq_path
             %li= link_to "Register", new_user_session_path
             - if current_user
-              %li= link_to "My leagues", leagues_path
+              %li= link_to "My Graphics", graphics_path
           - if current_user
             %ul.nav.navbar-nav.navbar-right
               %li= link_to "Log out", destroy_user_session_path, method: :delete

@@ -2,5 +2,5 @@ $('#image-status').removeClass('alert-danger');
 $('#image-status').addClass('alert-success');
 $('#image-status').html('Image refreshed successfully. Redirecting in 3 seconds...');
 setTimeout(function() {
-    window.location = '<%= league_results_url(@result.league) %>';
+    window.location = '<%= graphic_results_url(@result.graphic) %>';
 }, 3000);

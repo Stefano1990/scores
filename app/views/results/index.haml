@@ -1,10 +1,12 @@
 %h1.page-header
-  = "Results for #{link_to @league.name, league_path(@league)}".html_safe
-  - if @league.config && @league.background
-    = link_to "New result", new_league_result_path(@league), class: 'btn btn-primary pull-right'
+  = "Results for #{link_to @graphic.name, graphic_path(@graphic)}".html_safe
+  - if @graphic.config && @graphic.background
+    = link_to "New result", new_graphic_result_path(@graphic), class: 'btn btn-primary pull-right'
   - else
     = link_to "Background or config missing", '#', class: 'btn btn-danger pull-right', disabled: true
 %ol.breadcrumb
-  %li= link_to "Leagues", leagues_path
-  %li.active= @league.name
+  %li= link_to "Leagues", graphics_path
+  %li.active= @graphic.name
 = render 'results_table'
+:javascript
+  $(".table").tablesorter();

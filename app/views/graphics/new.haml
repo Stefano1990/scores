@@ -1,0 +1,13 @@
+%h1.page-header= "New graphic"
+%ol.breadcrumb
+  %li= link_to "Leagues", graphics_path
+  %li.active New graphic
+= form_for @graphic, html: { class: 'form-horizontal' } do |f|
+  = render 'shared/form_errors', form_model: @graphic
+  .form-group
+    = f.label :name, class: 'control-label col-sm-2'
+    .col-sm-10
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit 'Create graphic', class: 'btn btn-success', disable_with: "Creating graphic. Please wait..."

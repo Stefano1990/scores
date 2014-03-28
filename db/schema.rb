@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140327153020) do
+ActiveRecord::Schema.define(:version => 20140328164821) do
+
+  create_table "cars", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "drivers", :force => true do |t|
     t.integer  "pos"
@@ -39,15 +45,7 @@ ActiveRecord::Schema.define(:version => 20140327153020) do
     t.string   "status"
   end
 
-  create_table "league_configs", :force => true do |t|
-    t.integer  "league_id"
-    t.string   "config_name"
-    t.string   "config_uid"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "leagues", :force => true do |t|
+  create_table "graphics", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
     t.datetime "created_at",      :null => false
@@ -59,8 +57,37 @@ ActiveRecord::Schema.define(:version => 20140327153020) do
     t.string   "preview_name"
   end
 
-  create_table "results", :force => true do |t|
+  create_table "league_configs", :force => true do |t|
     t.integer  "league_id"
+    t.string   "config_name"
+    t.string   "config_uid"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "leagues", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "races", :force => true do |t|
+    t.integer  "season_id"
+    t.date     "date"
+    t.string   "name"
+    t.time     "practice_start"
+    t.time     "race_start"
+    t.integer  "track_id"
+    t.integer  "laps"
+    t.time     "time"
+    t.integer  "car_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "results", :force => true do |t|
+    t.integer  "graphic_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
     t.string   "image_name"
@@ -70,6 +97,24 @@ ActiveRecord::Schema.define(:version => 20140327153020) do
     t.string   "image_public_url"
     t.integer  "first_entry"
     t.integer  "last_entry"
+    t.string   "track_image_url"
+    t.string   "round"
+  end
+
+  create_table "seasons", :force => true do |t|
+    t.integer  "series_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "series", :force => true do |t|
+    t.integer  "league_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "standing_configs", :force => true do |t|
@@ -81,7 +126,7 @@ ActiveRecord::Schema.define(:version => 20140327153020) do
   end
 
   create_table "standings", :force => true do |t|
-    t.integer  "league_id"
+    t.integer  "graphic_id"
     t.string   "image_uid"
     t.string   "image_name"
     t.datetime "created_at",       :null => false

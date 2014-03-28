@@ -1,0 +1,30 @@
+%h1.page-header Leagues
+%h2.sub-header Active Graphics
+.table-responsive
+  %table.table.table-striped
+    %thead
+      %tr
+        %th #
+        %th Graphic name
+        %th last updated
+        %th has config
+        %th has background
+        %th actions
+    %tbody
+      - @graphics.each_with_index do |league,i|
+        %tr
+          %td= i+1
+          %td= link_to league.name, graphic_path(league)
+          %td= league.updated_at
+          - if league.config.nil? || league.config.empty?
+            %td= link_to "No config", edit_graphic_path(league), class: 'btn btn-danger'
+          - else
+            %td.no-problem Config found
+          - if league.background.nil?
+            %td= link_to "No background", edit_graphic_path(league), class: 'btn btn-danger'
+          - else
+            %td.no-problem Background found
+          %td= link_to "Standings (#{league.standings.count})", graphic_standings_path(league), class: 'btn btn-primary'
+          %td= link_to "Results (#{league.results.count})", graphic_results_path(league), class: 'btn btn-primary'
+          %td= link_to 'Destroy', graphic_path(league), confirm: 'Are you sure you want to delete this graphic irreversibly? The images will NOT be deleted.', class: 'btn btn-danger', method: :delete
+          %td= link_to "Edit", edit_graphic_path(league), class: 'btn btn-warning'

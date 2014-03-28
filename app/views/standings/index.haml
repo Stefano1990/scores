@@ -1,10 +1,10 @@
 %h1.page-header
-  = "Standings for #{link_to @league.name, league_path(@league)}".html_safe
-  - if @league.config && @league.background
-    = link_to "New standing", new_league_standing_path(@league), class: 'btn btn-primary'
+  = "Standings for #{link_to @graphic.name, graphic_path(@graphic)}".html_safe
+  - if @graphic.config && @graphic.background
+    = link_to "New standing", new_graphic_standing_path(@graphic), class: 'btn btn-primary'
   - else
     = link_to "Background or config missing", '#', class: 'btn btn-danger pull-right', disabled: true
 %ol.breadcrumb
-  %li= link_to "Leagues", leagues_path
-  %li.active= @league.name
+  %li= link_to "Leagues", graphics_path
+  %li.active= @graphic.name
 = render 'standings_table'

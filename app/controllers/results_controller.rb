@@ -1,19 +1,19 @@
 class ResultsController < ApplicationController
   def index
-    @league = League.find(params[:league_id])
-    @results = @league.results
+    @graphic = Graphic.find(params[:graphic_id])
+    @results = @graphic.results
   end
 
   def new
-    @league = League.find(params[:league_id])
-    @result = @league.results.new
+    @graphic = Graphic.find(params[:graphic_id])
+    @result = @graphic.results.new
   end
 
   def create
-    @league = League.find(params[:league_id])
-    @result = @league.results.new(params[:result])
+    @graphic = Graphic.find(params[:graphic_id])
+    @result = @graphic.results.new(params[:result])
     if @result.save
-      redirect_to league_results_path(@league), flash: { success: "Result created." }
+      redirect_to graphic_results_path(@graphic), flash: { success: "Result created." }
     else
       render 'new'
     end
@@ -22,10 +22,10 @@ class ResultsController < ApplicationController
   def refresh
     @result = Result.find(params[:result_id])
     if @result.make_image
-      #redirect_to league_Results_path(@result.league, @result.league.user), flash: { success: "Results refreshed." }
+      #redirect_to graphic_results_path(@result.graphic, @result.graphic.user), flash: { success: "Results refreshed." }
       render 'refresh-success', layout: false
     else
-      #redirect_to league_Results_path(@result.league, @result.league.user), flash: { error: "There was an error refreshing the Results." }
+      #redirect_to graphic_results_path(@result.graphic, @result.graphic.user), flash: { error: "There was an error refreshing the Results." }
       render 'refresh-error', layout: false
     end
   end
@@ -33,9 +33,9 @@ class ResultsController < ApplicationController
   def destroy
     @result = Result.find(params[:id])
     if @result.destroy
-      redirect_to league_results_path(@result.league), flash: { success: "Results destroyed." }
+      redirect_to graphic_results_path(@result.graphic), flash: { success: "Results destroyed." }
     else
-      redirect_to league_results_path(@result.league), flash: { error: "Results were not destroyed." }
+      redirect_to graphic_results_path(@result.graphic), flash: { error: "Results were not destroyed." }
     end
   end
 end

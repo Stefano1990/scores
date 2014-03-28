@@ -1,7 +1,7 @@
 .page-header
-  %h1= "Edit #{@league.name}"
-= form_for @league, html: { class: 'form-horizontal', multipart: true } do |f|
-  - if @league.background.nil? || @league.config.nil?
+  %h1= "Edit #{@graphic.name}"
+= form_for @graphic, html: { class: 'form-horizontal', multipart: true } do |f|
+  - if @graphic.background.nil? || @graphic.config.nil?
     .alert.alert-info To enable the preview feature a background and a config must be present.
   - else
     .row
@@ -9,13 +9,13 @@
         .form-group
           %label.col-sm-4.control-label Current background
           .col-sm-8
-            = image_tag @league.background.url, class: 'img-responsive'
+            = image_tag @graphic.background.url, class: 'img-responsive'
       .col-md-6
         .form-group
           %label.col-sm-2.control-label Preview
           .col-sm-10
-            - if @league.preview
-              = image_tag @league.preview.url, class: 'img-responsive'
+            - if @graphic.preview
+              = image_tag @graphic.preview.url, class: 'img-responsive'
             - else
               .alert.alert-info Preview not generated.
   .form-group
@@ -30,7 +30,7 @@
       = f.text_area :config, class: 'form-control'
   .form-group
     .col-sm-offset-2.col-sm-10
-      = f.submit 'Update league', class: 'btn btn-success'
+      = f.submit 'Update graphic', class: 'btn btn-success'
       = f.submit 'Preview', class: 'btn btn-success', disable_with: 'Please wait...'
 
 :javascript

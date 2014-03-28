@@ -21,7 +21,8 @@
           %a.navbar-brand{ href: "#" } Scores alpha
         .navbar-collapse.collapse
           %ul.nav.navbar-nav
-            %li= link_to "Leagues", leagues_path
+            %li= link_to "League: BTCC", graphics_path
+            %li= link_to "All leagues", graphics_path
             %li= link_to "Profile", '#'
           %ul.nav.navbar-nav.navbar-right
             %li= link_to "Log out", destroy_user_session_path, method: :delete
@@ -30,33 +31,27 @@
         - if current_user
           .col-sm-3.col-md-2.sidebar
             %ul.nav.nav-sidebar.leagues-navi
-              %li= link_to "All leagues".html_safe, leagues_path
-              %li.new= link_to "New league".html_safe, new_league_path
-              - current_user.leagues.each do |league|
-                %li.nav-divider
-                - unless league.new_record?
-                  - if league_displayed?(league)
-                    %li.active= link_to league.name, league_path(league)
-                    %li.edit= link_to "Edit #{league.name}", edit_league_path(league)
-                    %li.new= link_to "New results", new_league_result_path(league)
-                    %li.new= link_to "New standing", new_league_standing_path(league)
-                    %li= link_to "Results", league_results_path(league)
-                    %li= link_to "Standings", league_standings_path(league)
-                  - else
-                    %li= link_to league.name, league_path(league)
-              -#  = active_link_to "<span class='glyphicon glyphicon-th-list'></span> All Leagues".html_safe, leagues_path, wrap_tag: :li
-            -#
-            -#  = active_link_to "<span class='glyphicon glyphicon-th-list'></span> New league".html_safe, leagues_path, wrap_tag: :li
-            -#- if params[:controller] == 'leagues' && params[:action] == 'index'
-            -#  - @leagues.each do |league|
-            -#    %li.nav-divider
-            -#    %ul.nav.nav-sidebar= active_link_to league.name, league_path(league), wrap_tag: :li
-            -#- if params[:controller] == 'leagues' && params[:action] == 'show' || params[:controller] == 'results' || params[:controller] == 'standings'
-            -#  %ul.nav.nav-sidebar
-            -#    %li.active= link_to @league.name, league_path(@league)
-            -#  %ul.nav.nav-sidebar
-            -#    = active_link_to 'Results', league_results_path(@league), wrap_tag: :li
-            -#    = active_link_to 'Standings', league_standings_path(@league) , wrap_tag: :li
+              %li.active= link_to "BTCC"
+              %li.lvl2= link_to "Season 1"
+              %li.lvl3= link_to "Results"
+              %li.lvl3= link_to "Standings"
+              %li.nav-divider
+              %li= link_to "Carrera Cup"
+              %li.nav-divider
+              -#%li= link_to "All Graphics".html_safe, graphics_path
+              -#%li.new= link_to "New graphic".html_safe, new_graphic_path
+              -#- current_user.graphics.each do |league|
+              -#  %li.nav-divider
+              -#  - unless league.new_record?
+              -#    - if graphic_displayed?(league)
+              -#      %li.active= link_to league.name, graphic_path(league)
+              -#      %li.edit= link_to "Edit #{league.name}", edit_graphic_path(league)
+              -#      %li.new= link_to "New results image", new_graphic_result_path(league)
+              -#      %li.new= link_to "New standing image", new_graphic_standing_path(league)
+              -#      %li= link_to "Result images", graphic_results_path(league)
+              -#      %li= link_to "Standing images", graphic_standings_path(league)
+              -#    - else
+              -#      %li= link_to league.name, graphic_path(league)
         .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
           - flash.each do |key, value|
             = content_tag(:div, value, class: "alert alert-#{key}")

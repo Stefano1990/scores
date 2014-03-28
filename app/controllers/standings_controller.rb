@@ -2,20 +2,20 @@ class StandingsController < ApplicationController
   #before_filter :authenticate_user!
 
   def index
-    @league = League.find(params[:league_id])
-    @standings = @league.standings
+    @graphic = Graphic.find(params[:graphic_id])
+    @standings = @graphic.standings
   end
 
   def new
-    @league = League.find(params[:league_id])
-    @standing = @league.standings.new
+    @graphic = Graphic.find(params[:graphic_id])
+    @standing = @graphic.standings.new
   end
 
   def create
-    @league = League.find(params[:league_id])
-    @standing = @league.standings.new(params[:standing])
+    @graphic = Graphic.find(params[:graphic_id])
+    @standing = @graphic.standings.new(params[:standing])
     if @standing.save
-      redirect_to league_standings_path(@league), flash: { success: "Standings created." }
+      redirect_to graphic_standings_path(@graphic), flash: { success: "Standings created." }
     else
       render 'new'
     end
@@ -24,10 +24,10 @@ class StandingsController < ApplicationController
   def refresh
     @standing = Standing.find(params[:standing_id])
     if @standing.make_image
-      #redirect_to league_standings_path(@standing.league, @standing.league.user), flash: { success: "Standings refreshed." }
+      #redirect_to graphic_standings_path(@standing.graphic, @standing.graphic.user), flash: { success: "Standings refreshed." }
       render 'refresh-success', layout: false
     else
-      #redirect_to league_standings_path(@standing.league, @standing.league.user), flash: { error: "There was an error refreshing the standings." }
+      #redirect_to graphic_standings_path(@standing.graphic, @standing.graphic.user), flash: { error: "There was an error refreshing the standings." }
       render 'refresh-error', layout: false
     end
   end
@@ -35,7 +35,7 @@ class StandingsController < ApplicationController
   def destroy
     @standing = Standing.find(params[:id])
     if @standing.destroy
-      redirect_to league_standings_path(@standing.league), flash: { success: "Standings deleted." }
+      redirect_to graphic_standings_path(@standing.graphic), flash: { success: "Standings deleted." }
     end
   end
 end

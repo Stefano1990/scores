@@ -19,8 +19,8 @@
           - if standing.image
             = link_to "Image link", standing.image_public_url, target: '_blank', class: 'btn btn-success'
             = #clippy('https://github.com/mojombo/clippy', '#f9f9f9').html_safe
-          = link_to 'Refresh', league_standing_refresh_path(standing.league, standing), remote: true, data: { target: "#myModal", toggle: "modal" }, class: 'btn btn-warning'
-          = link_to 'Destroy', league_standing_path(standing.league, standing), confirm: 'Are you sure you want to delete this set of standings irreversibly? The image will be deleted too.', class: 'btn btn-danger', method: :delete
+          = link_to 'Refresh', graphic_standing_refresh_path(standing.graphic, standing), remote: true, data: { target: "#myModal", toggle: "modal" }, class: 'btn btn-warning'
+          = link_to 'Destroy', graphic_standing_path(standing.graphic, standing), confirm: 'Are you sure you want to delete this set of standings irreversibly? The image will be deleted too.', class: 'btn btn-danger', method: :delete
           / Modal
           #myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", role: "dialog", tabindex: "-1"}
             .modal-dialog

@@ -1,11 +1,11 @@
 module ImageComposer
   def extract_driver_list
     drivers = []
-    doc = Nokogiri::HTML(open(url))
+    @doc ||= Nokogiri::HTML(open(url))
     max_drivers = @config['general']['entries']
     case self.class.to_s
       when 'Result'
-        doc.css('table#driver_table tr.jsTableRow').each_with_index do |row,i|
+        @doc.css('table#driver_table tr.jsTableRow').each_with_index do |row,i|
           if (i+1) >= first_entry && (i+1) <= last_entry
             driver = Driver.new
             driver.pos = row.children[0].text.to_i
@@ -25,7 +25,7 @@ module ImageComposer
           end
         end
         # Because danlisa is retarded and doesn't display the drivers we need to fish them out afterwards and match them..
-        doc.css('table#team_table tr.jsTableRow').each_with_index do |row,i|
+        @doc.css('table#team_table tr.jsTableRow').each_with_index do |row,i|
           # parse all the teams
           string = row.children[0].text
           scanned_string = string.scan(/(\b[\w+\s]+)/i).flatten(1)
@@ -40,7 +40,7 @@ module ImageComposer
           #(\b[\w+\s]+)
         end
       when 'Standing'
-        doc.css('table#driver_table tr.jsTableRow').each_with_index do |row,i|
+        @doc.css('table#driver_table tr.jsTableRow').each_with_index do |row,i|
           if i < max_drivers
             driver = Driver.new
             driver.pos = row.children[0].text.to_i
@@ -65,9 +65,9 @@ module ImageComposer
   end
 
   def make_image
-    if league.config && league.background
-      background = league.background
-      @config = JSON.parse(league.config)
+    if graphic.config && graphic.background
+      background = graphic.background
+      @config = JSON.parse(graphic.config)
       @canvas = MiniMagick::Image.open(background.path)
       @drivers = extract_driver_list
       @font_attributes = font_attributes_hash

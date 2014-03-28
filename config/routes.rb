@@ -6,13 +6,13 @@ Scores::Application.routes.draw do
   #match 'pages/home' => 'pages#home'
 
   resources :users do
-    resources :leagues do
+    resources :graphics do
       resource :standings
     end
     resource :results
   end
 
-  resources :leagues do
+  resources :graphics do
     resources :standings do
       get 'refresh' => 'standings#refresh'
     end

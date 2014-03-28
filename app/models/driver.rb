@@ -1,4 +1,4 @@
 class Driver < ActiveRecord::Base
-  belongs_to    :league
+  belongs_to    :graphic
   attr_protected
 end

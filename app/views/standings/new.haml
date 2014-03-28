@@ -1,5 +1,5 @@
-%h1.page-header= "New standings for #{@league.name}"
-= form_for [@league, @standing], html: { class: 'form-horizontal' } do |f|
+%h1.page-header= "New standings for #{@graphic.name}"
+= form_for [@graphic, @standing], html: { class: 'form-horizontal' } do |f|
   = render 'shared/form_errors', form_model: @standing
   .form-group
     = f.label :url, class: 'control-label col-sm-2'
