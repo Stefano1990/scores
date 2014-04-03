@@ -31,13 +31,21 @@
         - if current_user
           .col-sm-3.col-md-2.sidebar
             %ul.nav.nav-sidebar.leagues-navi
-              %li.active= link_to "BTCC"
-              %li.lvl2= link_to "Season 1"
-              %li.lvl3= link_to "Results"
-              %li.lvl3= link_to "Standings"
-              %li.nav-divider
-              %li= link_to "Carrera Cup"
-              %li.nav-divider
+              - if current_league
+                - current_league.series.each do |series|
+                  - if series_active?(series)
+                    %li.active= link_to series.name, league_series_path(series.league,series)
+                    - series.seasons.each do |season|
+                      %li.lvl2= link_to season.name
+                  - else
+                    %li= link_to series.name, league_series_path(series,series.league)
+                  %li.nav-divider
+
+              -#%li.lvl2= link_to "Season 1"
+              -#%li.lvl3= link_to "Results"
+              -#%li.lvl3= link_to "Standings"
+              -#%li.nav-divider
+              -#%li= link_to "Carrera Cup"
               -#%li= link_to "All Graphics".html_safe, graphics_path
               -#%li.new= link_to "New graphic".html_safe, new_graphic_path
               -#- current_user.graphics.each do |league|

@@ -1,0 +1,37 @@
+.page-header
+  %h1= "Edit #{@season.name}"
+= form_for @season, html: { class: 'form-horizontal', multipart: true } do |f|
+  - if @season.background.nil? || @season.config.nil?
+    .alert.alert-info To enable the preview feature a background and a config must be present.
+  - else
+    .row
+      .col-md-6
+        .form-group
+          %label.col-sm-4.control-label Current background
+          .col-sm-8
+            = image_tag @season.background.url, class: 'img-responsive'
+      .col-md-6
+        .form-group
+          %label.col-sm-2.control-label Preview
+          .col-sm-10
+            - if @season.preview
+              = image_tag @season.preview.url, class: 'img-responsive'
+            - else
+              .alert.alert-info Preview not generated.
+  .form-group
+    = f.label :background, class: 'control-label col-sm-2'
+    .col-sm-10
+      = f.file_field :background, class: 'form-control'
+  .form-group
+    - if flash[:error]
+      .alert.alert-danger= flash[:error]
+    = f.label :config, class: 'control-label col-sm-2'
+    .col-sm-10
+      = f.text_area :config, class: 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit 'Update graphic', class: 'btn btn-success'
+      = f.submit 'Preview', class: 'btn btn-success', disable_with: 'Please wait...'
+
+:javascript
+  $('#league_config').ace({ lang: 'javascript' })

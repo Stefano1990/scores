@@ -1,0 +1,15 @@
+%h1.page-header
+  = "#{@series.name}".html_safe
+  = link_to "New season", new_league_series_season_path(@series.league, @series), class: 'btn btn-primary pull-right'
+%table.table.table-striped.tablesorter
+  %thead
+    %tr
+      %th Name
+      %th Series
+  %tbody
+    - @series.seasons.each_with_index do |season,i|
+      %tr
+        %td= link_to season.name, league_series_season_path(season.series.league, season.series, season)
+        %td 5 races
+:javascript
+  $(".table").tablesorter();

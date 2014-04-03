@@ -11,7 +11,14 @@ Scores::Application.routes.draw do
     end
     resource :results
   end
-
+  resources :leagues do
+    resources :series do
+      resources :seasons do
+        resource :standings
+        resource :results
+      end
+    end
+  end
   resources :graphics do
     resources :standings do
       get 'refresh' => 'standings#refresh'

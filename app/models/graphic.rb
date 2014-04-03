@@ -12,10 +12,6 @@ class Graphic < ActiveRecord::Base
   attr_accessible   :name, :user_id, :url, :config, :background, :background_uid, :preview
   validate          :name, presence: true
 
-  def get_driver_list(url_to_parse)
-
-  end
-
   def refresh
     doc = Nokogiri::HTML(open(url))
     doc.css('table#driver_table tr.jsTableRow').each do |row|

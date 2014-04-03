@@ -1,0 +1,16 @@
+%h1.page-header
+  = @league.name
+  = link_to "New series", new_league_series_path(@league), class: 'btn btn-primary pull-right'
+= current_league
+%table.table.table-striped.tablesorter
+  %thead
+    %tr
+      %th Name
+      %th Seasons
+  %tbody
+    - @league.series.each_with_index do |series,i|
+      %tr
+        %td= link_to series.name, league_series_path(@league,series)
+        %td= series.seasons.count
+:javascript
+  $(".table").tablesorter();

@@ -1,0 +1,14 @@
+%h1.page-header
+  = "Your leagues".html_safe
+%table.table.table-striped.tablesorter
+  %thead
+    %tr
+      %th Name
+      %th Series
+  %tbody
+    - @leagues.each_with_index do |league,i|
+      %tr
+        %td= link_to league.name, league_path(league)
+        %td= league.series.count
+:javascript
+  $(".table").tablesorter();

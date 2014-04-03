@@ -1,0 +1,18 @@
+%h1.page-header
+  = "#{@series.name} - #{@season.name}"
+  .btn-group.pull-right
+    = link_to "Edit config/background", new_league_series_path(@league), class: 'btn btn-default'
+    = link_to "New results", new_league_series_season_result_path(@league,@series,@season), class: 'btn btn-default'
+    = link_to "New standings", new_league_series_season_standing_path(@league,@series,@season), class: 'btn btn-primary'
+-#%table.table.table-striped.tablesorter
+-#  %thead
+-#    %tr
+-#      %th Name
+-#      %th Seasons
+-#  %tbody
+-#    - @league.series.each_with_index do |series,i|
+-#      %tr
+-#        %td= link_to series.name, league_series_path(@league,series)
+-#        %td= series.seasons.count
+:javascript
+  $(".table").tablesorter();
