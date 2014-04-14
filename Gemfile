@@ -20,6 +20,7 @@ gem 'mini_magick'
 gem 'rmagick'
 gem 'jquery-ace-rails'
 gem 'rb-readline'
+gem 'paper_trail', '~> 3.0.1'
 
 group :development do
   gem "better_errors"

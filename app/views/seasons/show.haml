@@ -2,8 +2,8 @@
   = "#{@series.name} - #{@season.name}"
   .btn-group.pull-right
     = link_to "Edit config/background", new_league_series_path(@league), class: 'btn btn-default'
-    = link_to "New results", new_league_series_season_result_path(@league,@series,@season), class: 'btn btn-default'
-    = link_to "New standings", new_league_series_season_standing_path(@league,@series,@season), class: 'btn btn-primary'
+    = link_to "New results", new_league_series_season_results_path(@league,@series,@season), class: 'btn btn-default'
+    = link_to "New standings", new_league_series_season_standings_path(@league,@series,@season), class: 'btn btn-primary'
 -#%table.table.table-striped.tablesorter
 -#  %thead
 -#    %tr

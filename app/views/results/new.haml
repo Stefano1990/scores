@@ -1,26 +1,30 @@
-%h1.page-header= "New results for #{@graphic.name}"
-= form_for [@graphic, @result], html: { class: 'form-horizontal' } do |f|
+%h1.page-header= "New results for #{@season.name}"
+= form_for [@league,@series,@season,@result], html: { class: 'form-horizontal', multipart: true } do |f|
   = render 'shared/form_errors', form_model: @result
   .form-group
-    = f.label :url, class: 'control-label col-sm-2'
+    = f.label :csv, class: 'control-label col-sm-2'
     .col-sm-10
-      = f.text_field :url, class: 'form-control'
+      = f.file_field :csv
   -#.form-group
-  -#  = f.label :first_entry, class: 'control-label col-sm-2'
+  -#  = f.label :url, class: 'control-label col-sm-2'
+  -#  .col-sm-10
+  -#    = f.text_field :url, class: 'form-control'
+  -#-#.form-group
+  -#-#  = f.label :first_entry, class: 'control-label col-sm-2'
+  -#-#  .col-sm-4
+  -#-#    = f.text_field :first_entry, class: 'form-control', type: :number
+  -#-#  .col-sm-10.col-sm-offset-2
+  -#.form-group
+  -#  = f.label :last_entry, '# of Drivers',class: 'control-label col-sm-2'
   -#  .col-sm-4
-  -#    = f.text_field :first_entry, class: 'form-control', type: :number
+  -#    = f.text_field :last_entry, class: 'form-control', type: :number
   -#  .col-sm-10.col-sm-offset-2
-  .form-group
-    = f.label :last_entry, '# of Drivers',class: 'control-label col-sm-2'
-    .col-sm-4
-      = f.text_field :last_entry, class: 'form-control', type: :number
-    .col-sm-10.col-sm-offset-2
-      %p.help-block.alert.alert-info
-        Number of images generated is a result of your config file #nr of drivers divided by 'general'->'entries'.
-        Example: Config says 12 drivers per image. #nr of drivers = 30 -> 3 images. (12+12+10)
-      -#%p.help-block.alert.alert-info
-      -#  "First entry" specifies the first driver to be shown on the image. "Last entry" is the last driver.
-      -#  To generate a graphic for drivers 1-10, type in 1 and 10. For the second part of the grid type in 11 and 20, etc.
+  -#    %p.help-block.alert.alert-info
+  -#      Number of images generated is a result of your config file #nr of drivers divided by 'general'->'entries'.
+  -#      Example: Config says 12 drivers per image. #nr of drivers = 30 -> 3 images. (12+12+10)
+  -#    -#%p.help-block.alert.alert-info
+  -#    -#  "First entry" specifies the first driver to be shown on the image. "Last entry" is the last driver.
+  -#    -#  To generate a graphic for drivers 1-10, type in 1 and 10. For the second part of the grid type in 11 and 20, etc.
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.submit 'Create results', class: 'btn btn-success', disable_with: 'Creating results. Please wait...'

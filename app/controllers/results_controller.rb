@@ -5,13 +5,15 @@ class ResultsController < ApplicationController
   end
 
   def new
-    @graphic = Graphic.find(params[:graphic_id])
-    @result = @graphic.results.new
+    @league = League.find(params[:league_id])
+    @series = @league.series.find(params[:series_id])
+    @season = @series.seasons.find(params[:season_id])
+    @result = @season.results.new
   end
 
   def create
-    @graphic = Graphic.find(params[:graphic_id])
-    @result = @graphic.results.new(params[:result])
+    #@graphic = Graphic.find(params[:graphic_id])
+    @result = Result.new(params[:result])
     if @result.save
       redirect_to graphic_results_path(@graphic), flash: { success: "Result created." }
     else
