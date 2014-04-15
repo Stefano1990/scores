@@ -96,6 +96,8 @@ class Result < ActiveRecord::Base
         when 4
         else
           # driver
+          driver_result = DriverResult.new
+          # todo write this parser.
       end
       line_nr = line_nr + 1
       a

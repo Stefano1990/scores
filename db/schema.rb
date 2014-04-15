@@ -11,12 +11,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140414145845) do
+ActiveRecord::Schema.define(:version => 20140414151729) do
 
   create_table "cars", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "driver_results", :force => true do |t|
+    t.integer  "result_id"
+    t.integer  "driver_id"
+    t.integer  "fin_pos"
+    t.integer  "car_id"
+    t.string   "car"
+    t.integer  "car_class_id"
+    t.string   "car_class"
+    t.integer  "cust_id"
+    t.string   "name"
+    t.integer  "start_pos"
+    t.string   "car_nr"
+    t.integer  "out_id"
+    t.string   "out"
+    t.string   "interval"
+    t.integer  "laps_led"
+    t.string   "average_lap_time"
+    t.string   "fastest_lap_time"
+    t.integer  "fast_lap_nr"
+    t.integer  "laps_comp"
+    t.integer  "inc"
+    t.integer  "league_points"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "drivers", :force => true do |t|
