@@ -1,0 +1,21 @@
+.form-group
+  = f.label :time, class: 'control-label col-sm-2'
+  .col-sm-10
+    - Penalty::PENALTY_STRINGS.each do |penalty|
+      .checkbox
+        %label{ for: penalty[0] }
+          = penalty[1]
+          = check_box "penalty",penalty[0],name: "penalty[#{penalty[0]}]"
+          -#= check_box_tag penalty[0], @penalty.send(penalty[0]), @penalty.send(penalty[0]), name: "penalty[#{penalty[0]}]"
+    -#  .checkbox
+    -#    %label{ for: penalty[0] }
+    -#      = check_box_tag penalty[0], @penalty.send(penalty[0]), @penalty.send(penalty[0]), name: "penalty[#{penalty[0]}]"
+    -#      = penalty[1]
+    -#= f.text_field :time, class: 'form-control'
+.form-group
+  = f.label :disqualification, class: 'control-label col-sm-2'
+  .col-sm-10
+    .checkbox
+      %label{ for: "disqualification" }
+        = check_box_tag "disqualification", @penalty.disqualification, @penalty.disqualification, name: 'penalty[disqualification]'
+        Disqualify

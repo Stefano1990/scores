@@ -1,0 +1,44 @@
+%h1.page-header
+  = "Round ? of ? - #{@result.track}"
+%table.table.table-striped.table-condensed.table-hover
+  %thead
+    %tr
+      %th Fin
+      %th ??
+      %th Driver
+      %th TD: Tot Pts
+      %th TD: Race Pts
+      %th TD: Bns Pts
+      %th Int
+      %th Laps
+      %th Laps Led
+      %th Fastest Lap
+      %th Fast Lap #
+      %th Average Lap
+      %th Incidents
+      %th Status
+      %th Team
+      %th Admin
+  %tbody
+    - @result.driver_results.each_with_index do |driver_result|
+      %tr
+        %td= driver_result.fin_pos
+        %td TD
+        %td= driver_result.name
+        %td TD
+        %td TD
+        %td TD
+        %td= driver_result.interval
+        %td= driver_result.laps_comp
+        %td= driver_result.laps_led
+        %td= driver_result.fastest_lap_time
+        %td= driver_result.fast_lap_nr
+        %td= driver_result.average_lap_time
+        %td= driver_result.inc
+        %td= driver_result.out
+        %td= driver_result.team_name_for_season(@season)
+        %td
+          - if driver_result.penalties.empty?
+            = link_to "Add penalty", new_driver_result_penalty_path(driver_result)
+          - else
+            = link_to "Edit penalty", edit_driver_result_penalty_path(driver_result,driver_result.penalties.first)

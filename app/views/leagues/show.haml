@@ -1,7 +1,7 @@
 %h1.page-header
   = @league.name
-  = link_to "New series", new_league_series_path(@league), class: 'btn btn-primary pull-right'
-= current_league
+  .btn-group.pull-right
+    = link_to "New series", new_league_series_path(@league), class: 'btn btn-primary'
 %table.table.table-striped.tablesorter
   %thead
     %tr

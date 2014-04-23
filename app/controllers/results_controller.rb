@@ -1,7 +1,12 @@
 class ResultsController < ApplicationController
+  def show
+    @league = League.find(params[:league_id])
+    @series = @league.series.find(params[:series_id])
+    @season = @series.seasons.find(params[:season_id])
+    @result = @season.results.find(params[:id])
+  end
+
   def index
-    @graphic = Graphic.find(params[:graphic_id])
-    @results = @graphic.results
   end
 
   def new
@@ -12,10 +17,12 @@ class ResultsController < ApplicationController
   end
 
   def create
-    #@graphic = Graphic.find(params[:graphic_id])
-    @result = Result.new(params[:result])
+    @league = League.find(params[:league_id])
+    @series = @league.series.find(params[:series_id])
+    @season = @series.seasons.find(params[:season_id])
+    @result = @season.results.new(params[:result])
     if @result.save
-      redirect_to graphic_results_path(@graphic), flash: { success: "Result created." }
+      redirect_to league_series_season_path(@league,@series,@season), flash: { success: "Result created." }
     else
       render 'new'
     end

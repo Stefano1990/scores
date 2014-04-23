@@ -1,6 +1,6 @@
 .page-header
   %h1= "Edit #{@season.name}"
-= form_for @season, html: { class: 'form-horizontal', multipart: true } do |f|
+= form_for [@league,@series,@season], html: { class: 'form-horizontal', multipart: true } do |f|
   - if @season.background.nil? || @season.config.nil?
     .alert.alert-info To enable the preview feature a background and a config must be present.
   - else
@@ -22,16 +22,24 @@
     = f.label :background, class: 'control-label col-sm-2'
     .col-sm-10
       = f.file_field :background, class: 'form-control'
-  .form-group
+  #season_config_box.form-group
     - if flash[:error]
       .alert.alert-danger= flash[:error]
     = f.label :config, class: 'control-label col-sm-2'
     .col-sm-10
-      = f.text_area :config, class: 'form-control'
+      %pre#season_config_editor.form-control
+        = @season.config
+  = f.text_area :config
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.submit 'Update graphic', class: 'btn btn-success'
       = f.submit 'Preview', class: 'btn btn-success', disable_with: 'Please wait...'
-
+= javascript_include_tag "src-min-noconflict/ace"
 :javascript
-  $('#league_config').ace({ lang: 'javascript' })
+  var editor = ace.edit("season_config_editor");
+  var textarea = $("#season_config").hide();
+  editor.getSession().setMode("ace/mode/javascript");
+  editor.getSession().setValue(textarea.val());
+  editor.getSession().on('change', function(){
+    textarea.val(editor.getSession().getValue());
+  });

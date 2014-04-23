@@ -9,10 +9,12 @@ module SeriesHelper
           when 'edit' then params[:id].to_i == series.id ? displayed = true : displayed = false
           when 'update' then params[:id].to_i == series.id ? displayed = true : displayed = false
         end
-      when 'seasons'
+      else
         params[:series_id].to_i == series.id ? displayed = true : displayed = false
-      when 'seasons'
-        params[:series_id].to_i == series.id ? displayed = true : displayed = false
+      #when 'seasons'
+      #  params[:series_id].to_i == series.id ? displayed = true : displayed = false
+      #when 'results'
+      #  params[:series_id].to_i == series.id ? displayed = true : displayed = false
     end
     displayed
   end

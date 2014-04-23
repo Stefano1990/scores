@@ -1,0 +1,19 @@
+%h1.page-header
+  = "Teams for #{@season.name}"
+  .btn-group.pull-right
+    = link_to "New team", new_league_series_season_team_path(@league,@series,@season), class: 'btn btn-default'
+%table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th #
+      %th Name
+      %th Drivers
+      %th
+  %tbody
+    - @teams.each_with_index do |team,i|
+      %tr
+        %td= i+1
+        %td= team.name
+        %td= team.drivers.map(&:name).join(", ")
+        %td= link_to "Edit", edit_league_series_season_team_path(@league,@series,@season,team)
+

@@ -8,12 +8,20 @@ class ApplicationController < ActionController::Base
     if @current_league.nil?
       if session[:league_id]
         @current_league = League.find(session[:league_id])
+        session[:league_id] = @current_league.id
       else
+        if params[:league_id]
+          @current_league = League.find(session[:league_id])
+          session[:league_id] = @current_league.id
+        end
+        if params[:controller] == 'leagues' && params[:action] == 'index'
+          @current_league = nil
+        end
         if params[:controller] == 'leagues' && params[:action] == 'show'
           @current_league = League.find(params[:id])
+          session[:league_id] = @current_league.id
         end
       end
-      session[:league_id] = @current_league.id
     end
     @current_league
   end

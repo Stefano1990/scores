@@ -127,3 +127,17 @@ table.tablesorter thead tr .headerSortDown {
 }
 li.lvl2 > a { padding-left: 35px; }
 li.lvl3 > a { padding-left: 50px; }
+#season_config_box {
+  height: 600px;
+}
+#season_config_editor {
+  margin: 0;
+  padding: 0;
+  width: 97%;
+  //position: absolute;
+  //top: 0;
+  //bottom: 0;
+  //left: 0;
+  //right: 0;
+ height: 600px;
+}

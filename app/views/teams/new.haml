@@ -1,0 +1,10 @@
+%h1.page-header
+  = "New team for #{@season.name}"
+= form_for [@league,@series,@season,@team], html: { class: 'form-horizontal' } do |f|
+  = render 'shared/form_errors', form_model: @team
+  = render 'form_fields', f: f
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit 'Create team', class: 'btn btn-success', disable_with: "Creating team. Please wait..."
+      -#= f.collection_select :drivers, Driver.all, :id, :name, { selected: @team.driver_ids, include_blank: false },
+      -#    { multiple: true }

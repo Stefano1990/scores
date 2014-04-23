@@ -14,8 +14,9 @@ Scores::Application.routes.draw do
   resources :leagues do
     resources :series do
       resources :seasons do
-        resource :standings
-        resource :results
+        resources :standings
+        resources :results
+        resources :teams
       end
     end
   end
@@ -30,6 +31,10 @@ Scores::Application.routes.draw do
     resources :backgrounds
   end
   resources :standings
+
+  resources :driver_results do
+    resources :penalties
+  end
 
 
   # The priority is based upon order of creation:

@@ -36,7 +36,7 @@
                   - if series_active?(series)
                     %li.active= link_to series.name, league_series_path(series.league,series)
                     - series.seasons.each do |season|
-                      %li.lvl2= link_to season.name
+                      %li.lvl2= link_to season.name, league_series_season_path(series.league,series,season)
                   - else
                     %li= link_to series.name, league_series_path(series,series.league)
                   %li.nav-divider

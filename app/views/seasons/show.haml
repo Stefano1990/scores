@@ -1,9 +1,21 @@
 %h1.page-header
   = "#{@series.name} - #{@season.name}"
   .btn-group.pull-right
-    = link_to "Edit config/background", new_league_series_path(@league), class: 'btn btn-default'
-    = link_to "New results", new_league_series_season_results_path(@league,@series,@season), class: 'btn btn-default'
-    = link_to "New standings", new_league_series_season_standings_path(@league,@series,@season), class: 'btn btn-primary'
+    = link_to "Edit config/background", edit_league_series_season_path(@league,@series,@season), class: 'btn btn-default'
+    = link_to "New results", new_league_series_season_result_path(@league,@series,@season), class: 'btn btn-default'
+    = link_to "Teams", league_series_season_teams_path(@league,@series,@season), class: 'btn btn-default'
+    = link_to "New standings", new_league_series_season_standing_path(@league,@series,@season), class: 'btn btn-primary'
+%h2 Results
+%table.table.table-striped
+  %thead
+    %tr
+      %th #
+      %th Track
+  %tbody
+    - @season.results.each_with_index do |result,i|
+      %tr
+        %td= i+1
+        %td= link_to result.track, league_series_season_result_path(@league,@series,@season,result)
 -#%table.table.table-striped.tablesorter
 -#  %thead
 -#    %tr

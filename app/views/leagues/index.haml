@@ -1,5 +1,7 @@
 %h1.page-header
   = "Your leagues".html_safe
+  .btn-group.pull-right
+    = link_to "New league", new_league_path, class: 'btn btn-primary'
 %table.table.table-striped.tablesorter
   %thead
     %tr

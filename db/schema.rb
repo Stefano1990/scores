@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140414151729) do
+ActiveRecord::Schema.define(:version => 20140423095037) do
 
   create_table "cars", :force => true do |t|
     t.string   "name"
@@ -33,16 +33,23 @@ ActiveRecord::Schema.define(:version => 20140414151729) do
     t.string   "car_nr"
     t.integer  "out_id"
     t.string   "out"
-    t.string   "interval"
     t.integer  "laps_led"
-    t.string   "average_lap_time"
-    t.string   "fastest_lap_time"
     t.integer  "fast_lap_nr"
     t.integer  "laps_comp"
     t.integer  "inc"
     t.integer  "league_points"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.string   "interval",         :limit => nil
+    t.string   "fastest_lap_time", :limit => nil
+    t.string   "average_lap_time", :limit => nil
+  end
+
+  create_table "driver_team_connections", :force => true do |t|
+    t.integer  "driver_id"
+    t.integer  "team_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "drivers", :force => true do |t|
@@ -69,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20140414151729) do
     t.string   "avg_lap"
     t.integer  "inc"
     t.string   "status"
+    t.integer  "customer_id"
   end
 
   create_table "graphics", :force => true do |t|
@@ -98,6 +106,25 @@ ActiveRecord::Schema.define(:version => 20140414151729) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "penalties", :force => true do |t|
+    t.integer  "driver_result_id"
+    t.boolean  "disqualification"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.boolean  "one_sec"
+    t.boolean  "two_sec"
+    t.boolean  "three_sec"
+    t.boolean  "five_sec"
+    t.boolean  "ten_sec"
+    t.boolean  "twenty_sec"
+    t.boolean  "one_grid"
+    t.boolean  "two_grid"
+    t.boolean  "three_grid"
+    t.boolean  "five_grid"
+    t.boolean  "ten_grid"
+    t.boolean  "thirty_sec"
+  end
+
   create_table "races", :force => true do |t|
     t.integer  "season_id"
     t.date     "date"
@@ -123,7 +150,7 @@ ActiveRecord::Schema.define(:version => 20140414151729) do
     t.string   "series"
     t.string   "hosted_session_name"
     t.string   "league_name"
-    t.integer  "league_id"
+    t.integer  "iracing_league_id"
     t.string   "league_season"
     t.integer  "league_season_id"
     t.string   "points_system"
@@ -167,6 +194,13 @@ ActiveRecord::Schema.define(:version => 20140414151729) do
     t.string   "url"
     t.string   "status"
     t.string   "image_public_url"
+  end
+
+  create_table "teams", :force => true do |t|
+    t.integer  "season_id"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

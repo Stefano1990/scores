@@ -1,0 +1,7 @@
+%h1.page-header= "Give penalty to #{@penalty.driver.name}"
+= form_for [@driver_result,@penalty], html: { class: 'form-horizontal' } do |f|
+  = render 'shared/form_errors', form_model: @penalty
+  = render 'form_fields', f: f
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit 'Update results', class: 'btn btn-success', disable_with: 'Updating results. Please wait...'
