@@ -2,13 +2,16 @@ class DriverResult < ActiveRecord::Base
   attr_accessible :driver_id, :result_id,  :result_id, :driver_id, :fin_pos, :car_id, :car,
                   :car_class_id, :car_class, :cust_id, :name, :start_pos, :car_nr, :out_id,
                   :out, :interval, :laps_led, :average_lap_time, :fastest_lap_time, :fast_lap_nr,
-                  :laps_comp, :inc, :league_points
+                  :laps_comp, :inc, :league_points, :bns_pts, :race_pts
   belongs_to      :driver
   belongs_to      :result
   has_many        :penalties
   delegate        :season, to: :result
   delegate        :series, to: :result
   delegate        :league, to: :result
+  delegate        :point_system, to: :season
+
+  before_save     :lookup_race_pts
 
   def find_driver
     driver = Driver.find_by_customer_id(cust_id)
@@ -65,5 +68,11 @@ class DriverResult < ActiveRecord::Base
     self.interval = milliseconds_to_dbtime(period_to_milliseconds(interval) - 60*60*1000)
   end
 
+  def total_pts
+    race_pts + bns_pts.to_i
+  end
 
+  def lookup_race_pts
+    self.race_pts = point_system.pts_for(fin_pos)
+  end
 end

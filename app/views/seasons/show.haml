@@ -2,6 +2,10 @@
   = "#{@series.name} - #{@season.name}"
   .btn-group.pull-right
     = link_to "Edit config/background", edit_league_series_season_path(@league,@series,@season), class: 'btn btn-default'
+    - if @season.point_system
+      = link_to "Edit point system", edit_league_series_season_path(@league,@series,@season), class: 'btn btn-default'
+    - else
+      = link_to "New point system", new_season_point_system_path(@season), class: 'btn btn-default'
     = link_to "New results", new_league_series_season_result_path(@league,@series,@season), class: 'btn btn-default'
     = link_to "Teams", league_series_season_teams_path(@league,@series,@season), class: 'btn btn-default'
     = link_to "New standings", new_league_series_season_standing_path(@league,@series,@season), class: 'btn btn-primary'

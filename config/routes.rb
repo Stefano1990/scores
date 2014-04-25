@@ -36,6 +36,10 @@ Scores::Application.routes.draw do
     resources :penalties
   end
 
+  resources :seasons do
+    resources :point_systems
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

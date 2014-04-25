@@ -4,7 +4,6 @@
   %thead
     %tr
       %th Fin
-      %th ??
       %th Driver
       %th TD: Tot Pts
       %th TD: Race Pts
@@ -23,11 +22,10 @@
     - @result.driver_results.each_with_index do |driver_result|
       %tr
         %td= driver_result.fin_pos
-        %td TD
         %td= driver_result.name
-        %td TD
-        %td TD
-        %td TD
+        %td= driver_result.total_pts
+        %td= @result.season.point_system.pts_for(driver_result.fin_pos)
+        %td= driver_result.bns_pts
         %td= driver_result.interval
         %td= driver_result.laps_comp
         %td= driver_result.laps_led
@@ -42,3 +40,31 @@
             = link_to "Add penalty", new_driver_result_penalty_path(driver_result)
           - else
             = link_to "Edit penalty", edit_driver_result_penalty_path(driver_result,driver_result.penalties.first)
+          = link_to "Bonus points", edit_driver_result_path(driver_result)
+
+%table.table.table-striped.table-condensed.table-hover
+  %thead
+    %tr
+      %th Team name
+      %th Tot pts
+      %th Bns pts
+      %th Laps
+      %th Laps led
+      %th Inc
+  %tbody
+    - @season.teams.each do |team|
+      %tr
+        %td.h3= team.name
+        %td= @result.team_tot_pts(team)
+        %td= @result.team_bns_pts(team)
+        %td= @result.team_tot_laps(team)
+        %td= @result.team_laps_led(team)
+        %td= @result.team_inc(team)
+      - team.drivers.each do |driver|
+        %tr
+          %td= driver.name
+          %td= @result.result_for_driver(driver).total_pts
+          %td= @result.result_for_driver(driver).bns_pts.to_i
+          %td= @result.result_for_driver(driver).laps_comp
+          %td= @result.result_for_driver(driver).laps_led
+          %td= @result.result_for_driver(driver).inc

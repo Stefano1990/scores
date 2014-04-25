@@ -129,4 +129,32 @@ class Result < ActiveRecord::Base
       driver_result.update_attribute(:fin_pos, i+1)
     end
   end
+
+  def team_tot_pts(team)
+    team_bns_pts(team) + team_race_pts(team)
+  end
+
+  def team_race_pts(team)
+    driver_results.where(driver_id: team.drivers).sum(:race_pts)
+  end
+
+  def team_bns_pts(team)
+    driver_results.where(driver_id: team.drivers).sum(:bns_pts)
+  end
+
+  def team_tot_laps(team)
+    driver_results.where(driver_id: team.drivers).sum(:laps_comp)
+  end
+
+  def team_laps_led(team)
+    driver_results.where(driver_id: team.drivers).sum(:laps_led)
+  end
+
+  def team_inc(team)
+    driver_results.where(driver_id: team.drivers).sum(:inc)
+  end
+
+  def result_for_driver(driver)
+    driver_results.find_by_driver_id(driver.id)
+  end
 end

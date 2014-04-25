@@ -7,6 +7,7 @@ class Season < ActiveRecord::Base
   has_many        :standings
   has_many        :results
   has_many        :teams
+  has_one         :point_system
 
   delegate        :league, to: :series
 
