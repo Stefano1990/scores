@@ -51,7 +51,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: scores_production
+  database: scores_development
   pool: 5
   host: localhost
   username: scores

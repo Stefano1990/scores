@@ -1,6 +1,8 @@
 class Driver < ActiveRecord::Base
   has_many      :driver_team_connections
   has_many      :teams, through: :driver_team_connections
+  has_many      :driver_standings
+
   validates     :customer_id, presence: true, uniqueness: true
   validates     :name, presence: true
   attr_protected

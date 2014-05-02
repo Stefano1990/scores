@@ -1,5 +1,8 @@
 class StandingsController < ApplicationController
-  #before_filter :authenticate_user!
+
+  def show
+    @standing = Standing.find(params[:id])
+  end
 
   def index
     @graphic = Graphic.find(params[:graphic_id])

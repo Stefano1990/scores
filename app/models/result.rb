@@ -4,9 +4,11 @@ class Result < ActiveRecord::Base
   include ImageComposer
 
   belongs_to          :season
-  has_many            :driver_results, order: 'fin_pos asc, interval desc'
+  has_many            :driver_results, order: 'fin_pos asc, interval desc', dependent: :destroy
   has_many            :drivers, through: :driver_results
-  has_many            :penalties
+  has_many            :team_results, dependent: :destroy
+  has_many            :teams, through: :drivers, uniq: true
+  #has_many            :penalties, dependent: :destroy
 
   #dragonfly_accessor  :image
   attr_accessible     :url, :csv, :parsed_csv_string, :season_id, :image_name, :image_uid, :first_entry, :last_entry
@@ -15,7 +17,7 @@ class Result < ActiveRecord::Base
 
   #after_create        :make_image
   #before_save         :get_meta_data
-  before_save         :parse_results      #
+  after_save         :parse_results      #
 
   delegate        :series, to: :season
   delegate        :league, to: :season
@@ -57,6 +59,7 @@ class Result < ActiveRecord::Base
   def parse_results
     prepare_csv
     parse_csv_string
+    calculate_team_results
   end
 
   # class methods for playing around.
@@ -97,7 +100,6 @@ class Result < ActiveRecord::Base
         else
           # driver
           driver_result = self.driver_results.new
-          # todo write this parser.
           driver_result.fin_pos = line[0].to_i
           driver_result.car_id = line[1].to_i
           driver_result.car = line[2]
@@ -118,9 +120,23 @@ class Result < ActiveRecord::Base
           driver_result.inc = line[17]
           driver_result.league_points = line[18]
           driver_result.find_driver
+          driver_result.find_team
           driver_result.save
       end
       line_nr = line_nr + 1
+    end
+  end
+
+  def calculate_team_results
+    driver_results.each do |driver_result|
+      team_result = team_results.find_or_initialize_by_team_id(driver_result.team_id)
+      team_result.laps_led += driver_result.laps_led.to_i
+      team_result.laps_comp += driver_result.laps_comp.to_i
+      team_result.inc += driver_result.inc.to_i
+      #team_result.league_points += driver_result.laps_led
+      team_result.race_pts += driver_result.race_pts.to_i
+      team_result.bns_pts += driver_result.bns_pts.to_i
+      team_result.save
     end
   end
 
@@ -128,30 +144,6 @@ class Result < ActiveRecord::Base
     driver_results.each_with_index do |driver_result,i|
       driver_result.update_attribute(:fin_pos, i+1)
     end
-  end
-
-  def team_tot_pts(team)
-    team_bns_pts(team) + team_race_pts(team)
-  end
-
-  def team_race_pts(team)
-    driver_results.where(driver_id: team.drivers).sum(:race_pts)
-  end
-
-  def team_bns_pts(team)
-    driver_results.where(driver_id: team.drivers).sum(:bns_pts)
-  end
-
-  def team_tot_laps(team)
-    driver_results.where(driver_id: team.drivers).sum(:laps_comp)
-  end
-
-  def team_laps_led(team)
-    driver_results.where(driver_id: team.drivers).sum(:laps_led)
-  end
-
-  def team_inc(team)
-    driver_results.where(driver_id: team.drivers).sum(:inc)
   end
 
   def result_for_driver(driver)

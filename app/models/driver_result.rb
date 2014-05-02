@@ -5,10 +5,12 @@ class DriverResult < ActiveRecord::Base
                   :laps_comp, :inc, :league_points, :bns_pts, :race_pts
   belongs_to      :driver
   belongs_to      :result
+  belongs_to      :team
   has_many        :penalties
   delegate        :season, to: :result
   delegate        :series, to: :result
   delegate        :league, to: :result
+  delegate        :team_for_season, to: :driver
   delegate        :point_system, to: :season
 
   before_save     :lookup_race_pts
@@ -16,9 +18,13 @@ class DriverResult < ActiveRecord::Base
   def find_driver
     driver = Driver.find_by_customer_id(cust_id)
     if driver.nil?
-      driver = Driver.create!(customer_id: cust_id, name: name)
+      driver = Driver.create(customer_id: cust_id, name: name)
     end
     self.driver = driver
+  end
+
+  def find_team
+    self.team = driver.team_for_season(season)
   end
 
   def team_name_for_season(season)

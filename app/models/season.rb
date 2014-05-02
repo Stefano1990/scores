@@ -3,7 +3,7 @@ class Season < ActiveRecord::Base
   attr_accessible :description, :name, :series_id, :config, :background
   belongs_to      :series
   belongs_to      :user
-  has_many        :drivers, through: :results
+  has_many        :drivers, through: :results, uniq: true
   has_many        :standings
   has_many        :results
   has_many        :teams

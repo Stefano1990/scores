@@ -1,0 +1,54 @@
+%h1.page-header= "Standings"
+%table.table.table-striped.table-condensed.table-hover
+  %thead
+    %tr
+      %th Pos
+      %th Driver
+      %th Tot Pts
+      %th Race Pts
+      %th Bns Pts
+      %th Laps
+      %th Laps Led
+      %th Incidents
+      %th Team
+  %tbody
+    - @standing.driver_standings.each do |driver_standing|
+      %tr
+        %td= driver_standing.pos
+        %td= driver_standing.driver.name
+        %td= driver_standing.tot_pts
+        %td= driver_standing.race_pts
+        %td= driver_standing.bns_pts
+        %td= driver_standing.laps_comp
+        %td= driver_standing.laps_led
+        %td= driver_standing.inc
+        %td= driver_standing.driver.team.name if driver_standing.driver.team
+
+
+%table.table.table-striped.table-condensed.table-hover
+  %thead
+    %tr
+      %th Team name
+      %th Tot pts
+      %th Bns pts
+      %th Laps
+      %th Laps led
+      %th Inc
+  %tbody
+    - @standing.team_standings.each do |team_standing|
+      - if team_standing.team
+        %tr
+          %td.h3= team_standing.team.name
+          %td= team_standing.tot_pts
+          %td= team_standing.bns_pts
+          %td= team_standing.laps_comp
+          %td= team_standing.laps_led
+          %td= team_standing.inc
+        - team.drivers.each do |driver|
+          %tr
+            %td= driver.name
+            %td= @result.result_for_driver(driver).total_pts
+            %td= @result.result_for_driver(driver).bns_pts.to_i
+            %td= @result.result_for_driver(driver).laps_comp
+            %td= @result.result_for_driver(driver).laps_led
+            %td= @result.result_for_driver(driver).inc

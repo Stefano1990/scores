@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140425135844) do
+ActiveRecord::Schema.define(:version => 20140502142517) do
 
   create_table "cars", :force => true do |t|
     t.string   "name"
@@ -33,18 +33,35 @@ ActiveRecord::Schema.define(:version => 20140425135844) do
     t.string   "car_nr"
     t.integer  "out_id"
     t.string   "out"
-    t.integer  "laps_led"
+    t.integer  "laps_led",                        :default => 0
     t.integer  "fast_lap_nr"
-    t.integer  "laps_comp"
-    t.integer  "inc"
-    t.integer  "league_points"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.integer  "laps_comp",                       :default => 0
+    t.integer  "inc",                             :default => 0
+    t.integer  "league_points",                   :default => 0
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
     t.string   "interval",         :limit => nil
     t.string   "fastest_lap_time", :limit => nil
     t.string   "average_lap_time", :limit => nil
-    t.integer  "bns_pts"
+    t.integer  "bns_pts",                         :default => 0
+    t.integer  "race_pts",                        :default => 0
+    t.integer  "team_id"
+  end
+
+  create_table "driver_standings", :force => true do |t|
+    t.integer  "standing_id"
+    t.integer  "driver_id"
+    t.integer  "tot_pts"
     t.integer  "race_pts"
+    t.integer  "bns_pts"
+    t.integer  "laps_comp"
+    t.integer  "laps_led"
+    t.integer  "inc"
+    t.integer  "team_id"
+    t.integer  "pos"
+    t.integer  "penalty_pts"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "driver_team_connections", :force => true do |t|
@@ -294,14 +311,35 @@ ActiveRecord::Schema.define(:version => 20140425135844) do
   end
 
   create_table "standings", :force => true do |t|
-    t.integer  "graphic_id"
-    t.string   "image_uid"
-    t.string   "image_name"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.string   "url"
-    t.string   "status"
-    t.string   "image_public_url"
+    t.integer "result_id"
+  end
+
+  create_table "team_results", :force => true do |t|
+    t.integer  "result_id"
+    t.integer  "laps_led",      :default => 0
+    t.integer  "laps_comp",     :default => 0
+    t.integer  "inc",           :default => 0
+    t.integer  "league_points", :default => 0
+    t.integer  "race_pts",      :default => 0
+    t.integer  "bns_pts",       :default => 0
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "team_id"
+  end
+
+  create_table "team_standings", :force => true do |t|
+    t.integer  "standing_id"
+    t.integer  "team_id"
+    t.integer  "tot_pts"
+    t.integer  "race_pts"
+    t.integer  "bns_pts"
+    t.integer  "laps_comp"
+    t.integer  "laps_led"
+    t.integer  "inc"
+    t.integer  "pos"
+    t.integer  "penalty_pts"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "teams", :force => true do |t|

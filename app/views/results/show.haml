@@ -5,9 +5,9 @@
     %tr
       %th Fin
       %th Driver
-      %th TD: Tot Pts
-      %th TD: Race Pts
-      %th TD: Bns Pts
+      %th Tot Pts
+      %th Race Pts
+      %th Bns Pts
       %th Int
       %th Laps
       %th Laps Led
@@ -52,19 +52,19 @@
       %th Laps led
       %th Inc
   %tbody
-    - @season.teams.each do |team|
-      %tr
-        %td.h3= team.name
-        %td= @result.team_tot_pts(team)
-        %td= @result.team_bns_pts(team)
-        %td= @result.team_tot_laps(team)
-        %td= @result.team_laps_led(team)
-        %td= @result.team_inc(team)
-      - team.drivers.each do |driver|
+    - @result.team_results.each do |team_result|
+      - if team_result.team
         %tr
-          %td= driver.name
-          %td= @result.result_for_driver(driver).total_pts
-          %td= @result.result_for_driver(driver).bns_pts.to_i
-          %td= @result.result_for_driver(driver).laps_comp
-          %td= @result.result_for_driver(driver).laps_led
-          %td= @result.result_for_driver(driver).inc
+          %td.h3= team_result.team.name
+          %td= team_result.race_pts
+          %td= team_result.bns_pts
+          %td= team_result.laps_comp
+          %td= team_result.inc
+        - team_result.drivers.each do |driver|
+          %tr
+            %td= driver.name
+            %td= @result.result_for_driver(driver).total_pts
+            %td= @result.result_for_driver(driver).bns_pts.to_i
+            %td= @result.result_for_driver(driver).laps_comp
+            %td= @result.result_for_driver(driver).laps_led
+            %td= @result.result_for_driver(driver).inc
