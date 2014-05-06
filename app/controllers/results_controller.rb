@@ -1,28 +1,21 @@
 class ResultsController < ApplicationController
   def show
-    @league = League.find(params[:league_id])
-    @series = @league.series.find(params[:series_id])
-    @season = @series.seasons.find(params[:season_id])
-    @result = @season.results.find(params[:id])
+    @result = Result.find(params[:id])
   end
 
   def index
   end
 
   def new
-    @league = League.find(params[:league_id])
-    @series = @league.series.find(params[:series_id])
-    @season = @series.seasons.find(params[:season_id])
+    @season = Season.find(params[:season_id])
     @result = @season.results.new
   end
 
   def create
-    @league = League.find(params[:league_id])
-    @series = @league.series.find(params[:series_id])
-    @season = @series.seasons.find(params[:season_id])
+    @season = Season.find(params[:season_id])
     @result = @season.results.new(params[:result])
     if @result.save
-      redirect_to league_series_season_path(@league,@series,@season), flash: { success: "Result created." }
+      redirect_to season_result_path(@season,@result), flash: { success: "Result created." }
     else
       render 'new'
     end

@@ -1,0 +1,25 @@
+%h1.page-header= "New driver bonus"
+= form_for [@driver_result,@driver_bonus], path: driver_result_driver_bonuses_path(@driver_result,@driver_bonus),
+                                           html: { class: 'form-horizontal' } do |f|
+  = render 'shared/form_errors', form_model: @driver_bonus
+  .form-group
+    = f.label :pole, class: 'control-label col-sm-2'
+    .col-sm-6
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :drivers, class: 'control-label col-sm-2'
+    .col-sm-10
+      .checkbox
+        = check_box :pole
+        -#%label{ for: penalty[0] }
+        -#  = penalty[1]
+        -#  = check_box_tag penalty[0], @penalty.send(penalty[0]), @penalty.send(penalty[0]), name: "penalty[#{penalty[0]}]"
+
+      -#- @season.drivers.order('name asc').each do |driver|
+      -#  .checkbox
+      -#    %label{ for: "driver_ids_#{driver.id}" }
+      -#      = check_box_tag "driver_ids_#{driver.id}", driver.id, @team.drivers.include?(driver), name: 'team[driver_ids][]'
+      -#      = driver.name
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit 'Create Season', class: 'btn btn-success', disable_with: "Creating Season. Please wait..."

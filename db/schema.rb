@@ -11,12 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140502142517) do
+ActiveRecord::Schema.define(:version => 20140505110331) do
 
   create_table "cars", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "driver_bonus", :force => true do |t|
+    t.integer  "driver_result_id"
+    t.boolean  "pole"
+    t.boolean  "fastest_lap"
+    t.integer  "lap_led"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "driver_results", :force => true do |t|
@@ -46,6 +55,9 @@ ActiveRecord::Schema.define(:version => 20140502142517) do
     t.integer  "bns_pts",                         :default => 0
     t.integer  "race_pts",                        :default => 0
     t.integer  "team_id"
+    t.boolean  "fastest_lap"
+    t.boolean  "lap_led"
+    t.boolean  "pole_position"
   end
 
   create_table "driver_standings", :force => true do |t|
@@ -246,8 +258,11 @@ ActiveRecord::Schema.define(:version => 20140502142517) do
     t.integer  "pts_98"
     t.integer  "pts_99"
     t.integer  "pts_100"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "pole_position", :default => 0
+    t.integer  "fastest_lap",   :default => 0
+    t.integer  "lap_led",       :default => 0
   end
 
   create_table "races", :force => true do |t|

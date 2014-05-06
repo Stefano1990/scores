@@ -34,11 +34,16 @@ Scores::Application.routes.draw do
 
   resources :driver_results do
     resources :penalties
+    resources :driver_bonuses
   end
 
   resources :seasons do
     resources :point_systems
+    resources :teams
+    resources :results
   end
+  resources :point_systems
+  resources :results
 
 
   # The priority is based upon order of creation:

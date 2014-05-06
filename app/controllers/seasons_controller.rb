@@ -4,9 +4,7 @@ class SeasonsController < ApplicationController
   end
 
   def show
-    @league = League.find(params[:league_id])
-    @series = @league.series.find(params[:series_id])
-    @season = @series.seasons.find(params[:id])
+    @season = Season.find(params[:id])
   end
 
   def new

@@ -1,4 +1,27 @@
 .form-group
-  = f.label :bns_pts, class: 'control-label col-sm-2'
-  .col-sm-2
-    = f.text_field :bns_pts, class: 'form-control', type: 'number'
+  = f.label :fastest_lap, class: 'control-label col-sm-2'
+  .col-sm-10
+    .checkbox
+      %label{ for: :fastest_lap }
+        Fastest lap
+        = hidden_field_tag 'driver_result[fastest_lap]', nil
+        = check_box_tag :fastest_lap, @driver_result.fastest_lap, @driver_result.fastest_lap, name: "driver_result[fastest_lap]"
+        -#= l.check_box 'fastest_lap'
+
+.form-group
+  = f.label :lap_led, class: 'control-label col-sm-2'
+  .col-sm-10
+    .checkbox
+      %label{ for: :lap_led }
+        Led a lap
+        = hidden_field_tag 'driver_result[lap_led]', nil
+        = check_box_tag :lap_led, @driver_result.lap_led, @driver_result.lap_led, name: "driver_result[lap_led]"
+
+.form-group
+  = f.label :pole_position, class: 'control-label col-sm-2'
+  .col-sm-10
+    .checkbox
+      %label{ for: :pole_position }
+        Pole position
+        = hidden_field_tag 'driver_result[pole_position]', nil
+        = check_box_tag :pole_position, @driver_result.pole_position, @driver_result.pole_position, name: "driver_result[pole_position]"

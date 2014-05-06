@@ -1,7 +1,16 @@
 %h1.page-header= "Edit driver result"
+%h4= @driver_result.driver.name
+%dl.dl-horizontal
+  %dt Finishing position
+  %dd= @driver_result.fin_pos
+  %dt Start position
+  %dd= @driver_result.start_pos
+  %dt Fastest lap
+  %dd= @driver_result.fastest_lap_time
+
 = form_for [@driver_result], html: { class: 'form-horizontal' } do |f|
   = render 'shared/form_errors', form_model: @driver_result
   = render 'form_fields', f: f
   .form-group
     .col-sm-offset-2.col-sm-10
-      = f.submit 'Create point system', class: 'btn btn-success', disable_with: 'Creating point system. Please wait...'
+      = f.submit 'Save result', class: 'btn btn-success', disable_with: 'Saving result. Please wait...'

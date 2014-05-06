@@ -3,3 +3,16 @@
     = f.label "pts_#{i}", class: 'control-label col-sm-2'
     .col-sm-2
       = f.text_field "pts_#{i}", class: 'form-control', type: 'number'
+%hr
+.form-group
+  = f.label "Pole position", class: "control-label col-sm-2"
+  .col-sm-2
+    = f.text_field "pole_position", class: 'form-control', type: 'number'
+.form-group
+  = f.label "Led a lap", class: "control-label col-sm-2"
+  .col-sm-2
+    = f.text_field "lap_led", class: 'form-control', type: 'number'
+.form-group
+  = f.label "Fastest lap", class: "control-label col-sm-2"
+  .col-sm-2
+    = f.text_field "fastest_lap", class: 'form-control', type: 'number'

@@ -26,4 +26,13 @@ class ApplicationController < ActionController::Base
     @current_league
   end
   helper_method :current_league
+
+  def current_season
+    if @current_season.nil?
+      @current_season = current_league.series.last.seasons.last
+
+    end
+    @current_season
+  end
+  helper_method :current_season
 end

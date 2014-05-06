@@ -2,11 +2,11 @@ class DriverResult < ActiveRecord::Base
   attr_accessible :driver_id, :result_id,  :result_id, :driver_id, :fin_pos, :car_id, :car,
                   :car_class_id, :car_class, :cust_id, :name, :start_pos, :car_nr, :out_id,
                   :out, :interval, :laps_led, :average_lap_time, :fastest_lap_time, :fast_lap_nr,
-                  :laps_comp, :inc, :league_points, :bns_pts, :race_pts
+                  :laps_comp, :inc, :league_points, :bns_pts, :race_pts, :lap_led, :fastest_lap, :pole_position
   belongs_to      :driver
   belongs_to      :result
   belongs_to      :team
-  has_many        :penalties
+  has_many        :penalties, dependent: :destroy
   delegate        :season, to: :result
   delegate        :series, to: :result
   delegate        :league, to: :result
@@ -14,6 +14,7 @@ class DriverResult < ActiveRecord::Base
   delegate        :point_system, to: :season
 
   before_save     :lookup_race_pts
+  before_save     :calculate_bns_pts
 
   def find_driver
     driver = Driver.find_by_customer_id(cust_id)
@@ -80,5 +81,13 @@ class DriverResult < ActiveRecord::Base
 
   def lookup_race_pts
     self.race_pts = point_system.pts_for(fin_pos)
+  end
+
+  def calculate_bns_pts
+    bns_pts = 0
+    bns_pts += point_system.fastest_lap if fastest_lap
+    bns_pts += point_system.lap_led if lap_led
+    bns_pts += point_system.pole_position if pole_position
+    self.bns_pts = bns_pts
   end
 end

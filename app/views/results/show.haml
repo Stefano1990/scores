@@ -1,5 +1,6 @@
 %h1.page-header
   = "Round ? of ? - #{@result.track}"
+%h2 Driver results
 %table.table.table-striped.table-condensed.table-hover
   %thead
     %tr
@@ -34,14 +35,15 @@
         %td= driver_result.average_lap_time
         %td= driver_result.inc
         %td= driver_result.out
-        %td= driver_result.team_name_for_season(@season)
+        %td= driver_result.team_name_for_season(@result.season)
         %td
           - if driver_result.penalties.empty?
             = link_to "Add penalty", new_driver_result_penalty_path(driver_result)
           - else
             = link_to "Edit penalty", edit_driver_result_penalty_path(driver_result,driver_result.penalties.first)
-          = link_to "Bonus points", edit_driver_result_path(driver_result)
+          = link_to "Edit bonus pts", edit_driver_result_path(driver_result)
 
+%h2 Team results
 %table.table.table-striped.table-condensed.table-hover
   %thead
     %tr
@@ -55,11 +57,7 @@
     - @result.team_results.each do |team_result|
       - if team_result.team
         %tr
-          %td.h3= team_result.team.name
-          %td= team_result.race_pts
-          %td= team_result.bns_pts
-          %td= team_result.laps_comp
-          %td= team_result.inc
+          %td.h3{ colspan: 6 }= team_result.team.name
         - team_result.drivers.each do |driver|
           %tr
             %td= driver.name
@@ -68,3 +66,9 @@
             %td= @result.result_for_driver(driver).laps_comp
             %td= @result.result_for_driver(driver).laps_led
             %td= @result.result_for_driver(driver).inc
+        %tr
+          %td
+          %td= team_result.race_pts
+          %td= team_result.bns_pts
+          %td= team_result.laps_comp
+          %td= team_result.inc

@@ -1,15 +1,8 @@
 %h1.page-header
-  = "#{@series.name} - #{@season.name}"
-  .btn-group.pull-right
-    = link_to "Edit config/background", edit_league_series_season_path(@league,@series,@season), class: 'btn btn-default'
-    - if @season.point_system
-      = link_to "Edit point system", edit_league_series_season_path(@league,@series,@season), class: 'btn btn-default'
-    - else
-      = link_to "New point system", new_season_point_system_path(@season), class: 'btn btn-default'
-    = link_to "New results", new_league_series_season_result_path(@league,@series,@season), class: 'btn btn-default'
-    = link_to "Teams", league_series_season_teams_path(@league,@series,@season), class: 'btn btn-default'
-    = link_to "New standings", new_league_series_season_standing_path(@league,@series,@season), class: 'btn btn-primary'
-%h2 Results
+  = "#{@season.series.name} - #{@season.name}"
+%h2
+  Results
+  = link_to "New", new_season_result_path(@season), class: 'btn btn-primary pull-right'
 %table.table.table-striped
   %thead
     %tr
@@ -19,7 +12,7 @@
     - @season.results.each_with_index do |result,i|
       %tr
         %td= i+1
-        %td= link_to result.track, league_series_season_result_path(@league,@series,@season,result)
+        %td= link_to result.track, result_path(result)
 -#%table.table.table-striped.tablesorter
 -#  %thead
 -#    %tr

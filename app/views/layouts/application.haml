@@ -25,42 +25,21 @@
             %li= link_to "All leagues", graphics_path
             %li= link_to "Profile", '#'
           %ul.nav.navbar-nav.navbar-right
+            %li= link_to "Results", season_path(current_season)
+            %li= link_to "config/background", edit_season_path(current_season)
+            %li= link_to "point system", edit_point_system_path(current_season.point_system)
+            %li= link_to "Teams", season_teams_path(current_season)
+            -#%li= link_to "New standings", new_league_series_season_standing_path(@league,@series,@season), class: 'btn btn-primary'
             %li= link_to "Log out", destroy_user_session_path, method: :delete
     .container-fluid
       .row
-        - if current_user
-          .col-sm-3.col-md-2.sidebar
-            %ul.nav.nav-sidebar.leagues-navi
-              - if current_league
-                - current_league.series.each do |series|
-                  - if series_active?(series)
-                    %li.active= link_to series.name, league_series_path(series.league,series)
-                    - series.seasons.each do |season|
-                      %li.lvl2= link_to season.name, league_series_season_path(series.league,series,season)
-                  - else
-                    %li= link_to series.name, league_series_path(series,series.league)
-                  %li.nav-divider
-
-              -#%li.lvl2= link_to "Season 1"
-              -#%li.lvl3= link_to "Results"
-              -#%li.lvl3= link_to "Standings"
-              -#%li.nav-divider
-              -#%li= link_to "Carrera Cup"
-              -#%li= link_to "All Graphics".html_safe, graphics_path
-              -#%li.new= link_to "New graphic".html_safe, new_graphic_path
-              -#- current_user.graphics.each do |league|
-              -#  %li.nav-divider
-              -#  - unless league.new_record?
-              -#    - if graphic_displayed?(league)
-              -#      %li.active= link_to league.name, graphic_path(league)
-              -#      %li.edit= link_to "Edit #{league.name}", edit_graphic_path(league)
-              -#      %li.new= link_to "New results image", new_graphic_result_path(league)
-              -#      %li.new= link_to "New standing image", new_graphic_standing_path(league)
-              -#      %li= link_to "Result images", graphic_results_path(league)
-              -#      %li= link_to "Standing images", graphic_standings_path(league)
-              -#    - else
-              -#      %li= link_to league.name, graphic_path(league)
-        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+        .col-sm-12
+          %ol.breadcrumb
+            %li= 'BSRtv'
+            %li= 'Road Warrior'
+            %li= 'Season 1'
+      .row
+        .col-sm-12.main
           - flash.each do |key, value|
             = content_tag(:div, value, class: "alert alert-#{key}")
           = yield
