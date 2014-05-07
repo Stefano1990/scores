@@ -4,7 +4,7 @@ class Result < ActiveRecord::Base
   include ImageComposer
 
   belongs_to          :season
-  has_many            :driver_results, order: 'fin_pos asc, interval desc', dependent: :destroy
+  has_many            :driver_results, order: 'interval desc, fin_pos asc', dependent: :destroy
   has_many            :drivers, through: :driver_results
   has_many            :team_results, dependent: :destroy
   has_many            :teams, through: :drivers, uniq: true
@@ -141,8 +141,15 @@ class Result < ActiveRecord::Base
   end
 
   def recalculate
+    # Update driver positions
     driver_results.each_with_index do |driver_result,i|
-      driver_result.update_attribute(:fin_pos, i+1)
+      driver_result.fin_pos = i+1
+      driver_result.recalculate
+      driver_result.save
+    end
+    # Update team results
+    team_results.each do |team_result|
+      team_result.recalculate
     end
   end
 

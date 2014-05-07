@@ -16,15 +16,13 @@ class PointSystemsController < ApplicationController
   end
 
   def edit
-    @season = Season.find(params[:season_id])
-    @point_system = @season.point_system
+    @point_system = PointSystem.find(params[:id])
   end
 
   def update
-    @season = Season.find(params[:season_id])
-    @point_system = @season.point_system
+    @point_system = PointSystem.find(params[:id])
     if @point_system.update_attributes(params[:point_system])
-      redirect_to league_series_season_path(@season.league,@season.series,@season), flash:
+      redirect_to league_series_season_path(@point_system.league,@point_system.series,@point_system.season), flash:
           { success: "Points saved." }
     else
       render 'edit'

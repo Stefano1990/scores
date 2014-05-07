@@ -1,5 +1,5 @@
 %h1.page-header= "Edit point system"
-= form_for [@season,@point_system], html: { class: 'form-horizontal' } do |f|
+= form_for [@point_system], html: { class: 'form-horizontal' } do |f|
   = render 'shared/form_errors', form_model: @point_system
   = render 'form_fields', f: f
   .form-group

@@ -48,7 +48,7 @@ class DriverResult < ActiveRecord::Base
     if string == "00:00:00"
       ms = 0
     else
-      md = string.match(/(-\d*):(\d*):(\d*).(\d*)/)
+      md = string.match(/(-?\d*):(\d*):(\d*).(\d*)/)
       ms = 0
       ms += md[1].to_i*3600000
       ms += md[2].to_i*60000
@@ -89,5 +89,10 @@ class DriverResult < ActiveRecord::Base
     bns_pts += point_system.lap_led if lap_led
     bns_pts += point_system.pole_position if pole_position
     self.bns_pts = bns_pts
+  end
+
+  def recalculate
+    lookup_race_pts
+    calculate_bns_pts
   end
 end
