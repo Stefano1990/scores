@@ -1,5 +1,4 @@
 class StandingsController < ApplicationController
-
   def show
     @standing = Standing.find(params[:id])
   end

@@ -144,3 +144,13 @@ li.lvl3 > a { padding-left: 50px; }
 .table-condensed {
   font-size: 12px;
 }
+.popover {
+  font-size: 14px;
+}
+.popover-toggler {
+  font-size: 14px;
+  &:hover {
+    text-decoration: none;
+    cursor: hand;
+  }
+}

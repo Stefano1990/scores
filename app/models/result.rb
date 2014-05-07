@@ -18,6 +18,7 @@ class Result < ActiveRecord::Base
   #after_create        :make_image
   #before_save         :get_meta_data
   after_save         :parse_results      #
+  after_save         :create_standings      #
 
   delegate        :series, to: :season
   delegate        :league, to: :season
@@ -38,8 +39,8 @@ class Result < ActiveRecord::Base
     get_round
   end
 
-  def get_name
-    #
+  def create_standings
+    season.standings.create(result: self)
   end
 
   def get_round

@@ -5,12 +5,11 @@ class PointSystem < ActiveRecord::Base
   delegate        :series, to: :season
   delegate        :league, to: :series
 
-  after_save      :expire_all_results
+  after_save      :expire_results_and_standings
 
-  def expire_all_results
-    season.results.each do |result|
-      result.recalculate
-    end
+  def expire_results_and_standings
+    season.results.each { |result| result.recalculate }
+    season.standings.each { |standing| standing.recalculate }
   end
 
   def pts_for(nr)

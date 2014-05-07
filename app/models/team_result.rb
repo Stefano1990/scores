@@ -2,8 +2,8 @@ class TeamResult < ActiveRecord::Base
   attr_accessible :bns_pts, :inc, :laps_comp, :laps_led, :league_points, :race_pts, :result_id, :team, :result
   belongs_to      :team
   belongs_to      :result
-  has_many        :driver_results, foreign_key: 'team_id', primary_key: 'team_id'
-  has_many        :drivers, through: :driver_results
+  has_many        :driver_results, foreign_key: 'team_id', primary_key: 'team_id', uniq: true
+  has_many        :drivers, through: :driver_results, uniq: true
 
   def recalculate
     [:laps_led, :laps_comp, :inc, :race_pts, :bns_pts].each do |att|
@@ -12,6 +12,7 @@ class TeamResult < ActiveRecord::Base
         self[att] += driver_result[att].to_i
       end
     end
+    self.starts = driver_results.count
     self.save
   end
 end

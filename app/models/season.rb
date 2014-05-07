@@ -4,8 +4,8 @@ class Season < ActiveRecord::Base
   belongs_to      :series
   belongs_to      :user
   has_many        :drivers, through: :results, uniq: true
-  has_many        :standings
-  has_many        :results
+  has_many        :standings, dependent: :destroy
+  has_many        :results, dependent: :destroy
   has_many        :teams
   has_one         :point_system
 

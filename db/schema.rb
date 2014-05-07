@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140505110331) do
+ActiveRecord::Schema.define(:version => 20140507110609) do
 
   create_table "cars", :force => true do |t|
     t.string   "name"
@@ -72,8 +72,9 @@ ActiveRecord::Schema.define(:version => 20140505110331) do
     t.integer  "team_id"
     t.integer  "pos"
     t.integer  "penalty_pts"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "starts",      :default => 0
   end
 
   create_table "driver_team_connections", :force => true do |t|
@@ -327,6 +328,7 @@ ActiveRecord::Schema.define(:version => 20140505110331) do
 
   create_table "standings", :force => true do |t|
     t.integer "result_id"
+    t.integer "season_id"
   end
 
   create_table "team_results", :force => true do |t|
@@ -340,6 +342,7 @@ ActiveRecord::Schema.define(:version => 20140505110331) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.integer  "team_id"
+    t.integer  "starts",        :default => 0
   end
 
   create_table "team_standings", :force => true do |t|
@@ -353,8 +356,9 @@ ActiveRecord::Schema.define(:version => 20140505110331) do
     t.integer  "inc"
     t.integer  "pos"
     t.integer  "penalty_pts"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "starts",      :default => 0
   end
 
   create_table "teams", :force => true do |t|

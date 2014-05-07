@@ -27,7 +27,7 @@
         %td= driver_result.total_pts
         %td= @result.season.point_system.pts_for(driver_result.fin_pos)
         %td= driver_result.bns_pts
-        %td= driver_result.interval
+        %td= pretty_interval(driver_result.interval)
         %td= driver_result.laps_comp
         %td= driver_result.laps_led
         %td= driver_result.fastest_lap_time

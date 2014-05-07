@@ -1,17 +1,24 @@
 class Standing < ActiveRecord::Base
   belongs_to :result, class_name: 'Result', foreign_key: 'result_id'
-  #belongs_to :previous_result, class_name: 'Result', foreign_key: 'previous_result_id'
+  belongs_to :season
 
   has_many        :drivers, through: :result, uniq: true
-  has_many        :driver_standings, order: 'tot_pts desc'
-  has_many        :team_standings, order: 'tot_pts desc'
+  has_many        :driver_standings, order: 'tot_pts desc', uniq: true
+  has_many        :team_standings, order: 'tot_pts desc', uniq: true
   has_many        :teams, through: :team_standings, uniq: true
 
   delegate        :series, to: :result
   delegate        :league, to: :result
   delegate        :season, to: :result
 
+  attr_accessible   :result
+
   after_save      :generate_standings
+
+  def recalculate
+    driver_standings.destroy_all
+    generate_standings
+  end
 
   def generate_standings
     driver_results = DriverResult.where(result_id: included_results)
@@ -25,16 +32,17 @@ class Standing < ActiveRecord::Base
       driver_standing.driver = driver
       driver_standing.race_pts = driver_results.where(driver_id: driver.id).sum(:race_pts)
       driver_standing.bns_pts = driver_results.where(driver_id: driver.id).sum(:bns_pts)
-      driver_standing.tot_pts = driver_standing.race_pts + driver_standing.bns_pts
+      driver_standing.tot_pts = driver_standing.race_pts + driver_standing.bns_pts.to_i
       driver_standing.laps_comp = driver_results.where(driver_id: driver.id).sum(:laps_comp)
       driver_standing.laps_led = driver_results.where(driver_id: driver.id).sum(:laps_led)
       driver_standing.inc = driver_results.where(driver_id: driver.id).sum(:inc)
       #driver_standing.penalty_pts = driver_results_for_driver(driver).sum(:inc)
       driver_standing.team_id = driver.team
+      driver_standing.starts = driver_results.where(driver_id: driver.id).count
       driver_standing.save
     end
 
-    driver_standings.each_with_index do |driver_standing,i|
+    driver_standings.reload.each_with_index do |driver_standing,i|
       driver_standing.pos = i+1
       driver_standing.save
     end
@@ -44,8 +52,8 @@ class Standing < ActiveRecord::Base
     team_results = TeamResult.where(result_id: included_results)
     team_results.each do |team_result|
       team_standing = team_standings.find_or_initialize_by_team_id(team_result.team_id)
-      [:race_pts,:bns_pts,:laps_comp,:laps_led,:inc].each do |sym|
-        team_standing[sym] = team_results.where(team_id: team_result.team_id).sum(sym)
+      [:race_pts,:bns_pts,:laps_comp,:laps_led,:inc,:starts].each do |att|
+        team_standing[att] = team_results.where(team_id: team_result.team_id).sum(att)
       end
       team_standing.tot_pts = team_standing.race_pts + team_standing.bns_pts
       team_standing.save

@@ -1,4 +1,4 @@
-%h1.page-header= "Standings"
+%h1.page-header= "Standings after #{@standing.included_results.count} rounds"
 %table.table.table-striped.table-condensed.table-hover
   %thead
     %tr
@@ -7,6 +7,7 @@
       %th Tot Pts
       %th Race Pts
       %th Bns Pts
+      %th Starts
       %th Laps
       %th Laps Led
       %th Incidents
@@ -19,6 +20,7 @@
         %td= driver_standing.tot_pts
         %td= driver_standing.race_pts
         %td= driver_standing.bns_pts
+        %td= driver_standing.starts
         %td= driver_standing.laps_comp
         %td= driver_standing.laps_led
         %td= driver_standing.inc
@@ -31,6 +33,7 @@
       %th Team name
       %th Tot pts
       %th Bns pts
+      %th Starts
       %th Laps
       %th Laps led
       %th Inc
@@ -41,14 +44,10 @@
           %td.h3= team_standing.team.name
           %td= team_standing.tot_pts
           %td= team_standing.bns_pts
+          %td= team_standing.starts
           %td= team_standing.laps_comp
           %td= team_standing.laps_led
           %td= team_standing.inc
-        - team.drivers.each do |driver|
+        - team_standing.team.drivers.each do |driver|
           %tr
             %td= driver.name
-            %td= @result.result_for_driver(driver).total_pts
-            %td= @result.result_for_driver(driver).bns_pts.to_i
-            %td= @result.result_for_driver(driver).laps_comp
-            %td= @result.result_for_driver(driver).laps_led
-            %td= @result.result_for_driver(driver).inc

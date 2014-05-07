@@ -13,15 +13,24 @@
       %tr
         %td= i+1
         %td= link_to result.track, league_series_season_result_path(result.league,result.series,result.season,result)
--#%table.table.table-striped.tablesorter
--#  %thead
--#    %tr
--#      %th Name
--#      %th Seasons
--#  %tbody
--#    - @league.series.each_with_index do |series,i|
--#      %tr
--#        %td= link_to series.name, league_series_path(@league,series)
--#        %td= series.seasons.count
+
+%h2
+  Standings
+  %a.popover-toggler{ data: { toggle: "popover", placement: "right", original_title: "Standings", content: "Standings are automatically generated after a result is uploaded." } }
+    %span.glyphicon.glyphicon-question-sign
+  -#= link_to "New", new_season_result_path(@season), class: 'btn btn-primary pull-right'
+%table.table.table-striped
+  %thead
+    %tr
+      %th #
+      %th Track
+  %tbody
+    - @season.standings.each_with_index do |standing,i|
+      %tr
+        %td= i+1
+        %td= link_to "Standing #{i}", league_series_season_standing_path(standing.league,standing.series,standing.season,standing)
+
+-#:javascript
+-#  $(".table").tablesorter();
 :javascript
-  $(".table").tablesorter();
+  $('a.popover-toggler').popover();

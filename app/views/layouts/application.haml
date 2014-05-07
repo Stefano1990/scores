@@ -26,6 +26,7 @@
             %li= link_to "Profile", '#'
           %ul.nav.navbar-nav.navbar-right
             %li= link_to "Results", league_series_season_path(current_season.league,current_season.series,current_season)
+            %li= link_to "Standings", league_series_season_path(current_season.league,current_season.series,current_season)
             %li= link_to "config/background", edit_league_series_season_path(current_season.league,current_season.series,current_season)
             %li= link_to "point system", edit_point_system_path(current_season.point_system)
             %li= link_to "Teams", season_teams_path(current_season)
@@ -35,9 +36,7 @@
       .row
         .col-sm-12
           %ol.breadcrumb
-            %li= 'BSRtv'
-            %li= 'Road Warrior'
-            %li= 'Season 1'
+            = breadcrumbs
       .row
         .col-sm-12.main
           - flash.each do |key, value|
