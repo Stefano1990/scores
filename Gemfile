@@ -6,7 +6,7 @@ gem 'rails', '3.2.14'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-gem "quiet_assets"
+gem 'quiet_assets'
 gem 'devise'
 gem 'cancan'
 gem 'haml'
@@ -21,6 +21,7 @@ gem 'rmagick'
 gem 'jquery-ace-rails'
 gem 'rb-readline'
 gem 'paper_trail', '~> 3.0.1'
+gem 'sidekiq'
 
 group :development do
   gem "better_errors"

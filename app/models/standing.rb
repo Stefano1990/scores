@@ -1,4 +1,6 @@
 class Standing < ActiveRecord::Base
+
+
   belongs_to :result, class_name: 'Result', foreign_key: 'result_id'
   belongs_to :season
 
@@ -6,6 +8,8 @@ class Standing < ActiveRecord::Base
   has_many        :driver_standings, order: 'tot_pts desc', uniq: true
   has_many        :team_standings, order: 'tot_pts desc', uniq: true
   has_many        :teams, through: :team_standings, uniq: true
+  has_many        :driver_standing_graphics, class_name: "DriverStandingGraphic"
+  has_many        :team_standing_graphics, class_name: "TeamStandingGraphic"
 
   delegate        :series, to: :result
   delegate        :league, to: :result
@@ -14,6 +18,7 @@ class Standing < ActiveRecord::Base
   attr_accessible   :result
 
   after_save      :generate_standings
+  after_save      :generate_graphics
 
   def recalculate
     driver_standings.destroy_all
@@ -24,6 +29,27 @@ class Standing < ActiveRecord::Base
     driver_results = DriverResult.where(result_id: included_results)
     generate_driver_standings(driver_results)
     generate_team_standings
+  end
+
+  def generate_graphics
+    # check how many graphics we need.
+    entries = JSON.parse(season.config)['general']['entries']
+    # Drivers
+    nr_of_graphics = (driver_standings.count.to_f/entries.to_f).ceil
+    nr_of_graphics.times do |i|
+      first_pos = (entries*i)+1
+      last_pos = entries*i
+      driver_standing_graphic = driver_standing_graphics.create(first_pos: first_pos, last_pos: last_pos)
+      driver_standing_graphic.create_image(i,nr_of_graphics)
+    end
+    # Teams
+    nr_of_graphics = (team_standings.count.to_f/entries.to_f).ceil
+    nr_of_graphics.times do |i|
+      first_pos = (entries*i)+1
+      last_pos = entries*i
+      team_standing_graphic = team_standing_graphics.create(first_pos: first_pos, last_pos: last_pos)
+      team_standing_graphic.create_image(i,nr_of_graphics)
+    end
   end
 
   def generate_driver_standings(driver_results)
@@ -37,7 +63,7 @@ class Standing < ActiveRecord::Base
       driver_standing.laps_led = driver_results.where(driver_id: driver.id).sum(:laps_led)
       driver_standing.inc = driver_results.where(driver_id: driver.id).sum(:inc)
       #driver_standing.penalty_pts = driver_results_for_driver(driver).sum(:inc)
-      driver_standing.team_id = driver.team
+      driver_standing.team = driver.team_for_season(season)
       driver_standing.starts = driver_results.where(driver_id: driver.id).count
       driver_standing.save
     end
@@ -56,6 +82,11 @@ class Standing < ActiveRecord::Base
         team_standing[att] = team_results.where(team_id: team_result.team_id).sum(att)
       end
       team_standing.tot_pts = team_standing.race_pts + team_standing.bns_pts
+      team_standing.save
+    end
+
+    team_standings.reload.each_with_index do |team_standing,i|
+      team_standing.pos = i+1
       team_standing.save
     end
   end

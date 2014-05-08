@@ -85,6 +85,8 @@ module ImageComposer
     end
   end
 
+
+
   def generate_preview
     @config = JSON.parse(config)
     # load sample data.
@@ -107,16 +109,7 @@ module ImageComposer
     self.update_attribute(:preview, Pathname.new("#{background.path.sub(/.png/, '')}-generated.png"))
   end
 
-  def compose_sub_image(model_attribute,config_attribute)
-    string = ""
-    font_attributes = combine_font_properties(config_attribute)
-    @drivers.each{|driver| string << "#{driver.send(model_attribute)}\n" }
-    x = @config[config_attribute]["x-pos"]
-    y = @config['general']['y-pos']
-    sub_image_job = Dragonfly.app.generate(:multiline,string,font_attributes)
-    sub_image = MiniMagick::Image.open(sub_image_job.path)
-    @canvas = @canvas.composite(sub_image) { |c| c.compose "Over"; c.geometry "+#{x}+#{y}" }
-  end
+
 
   def combine_font_properties(attribute)
     font_attributes = {}

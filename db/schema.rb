@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140507110609) do
+ActiveRecord::Schema.define(:version => 20140508095707) do
 
   create_table "cars", :force => true do |t|
     t.string   "name"
@@ -58,6 +58,17 @@ ActiveRecord::Schema.define(:version => 20140507110609) do
     t.boolean  "fastest_lap"
     t.boolean  "lap_led"
     t.boolean  "pole_position"
+  end
+
+  create_table "driver_standing_graphics", :force => true do |t|
+    t.integer  "standing_id"
+    t.integer  "first_pos"
+    t.integer  "last_pos"
+    t.string   "image_name"
+    t.string   "image_uid"
+    t.string   "url"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "driver_standings", :force => true do |t|
@@ -343,6 +354,17 @@ ActiveRecord::Schema.define(:version => 20140507110609) do
     t.datetime "updated_at",                   :null => false
     t.integer  "team_id"
     t.integer  "starts",        :default => 0
+  end
+
+  create_table "team_standing_graphics", :force => true do |t|
+    t.integer  "standing_id"
+    t.integer  "first_pos"
+    t.integer  "last_pos"
+    t.string   "image_name"
+    t.string   "image_uid"
+    t.string   "url"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "team_standings", :force => true do |t|

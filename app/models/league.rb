@@ -4,6 +4,6 @@ class League < ActiveRecord::Base
   has_many        :series
 
   def to_param
-    "#{id}-#{name}"
+    "#{id}-#{name.parameterize}"
   end
 end

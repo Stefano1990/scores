@@ -23,12 +23,20 @@
   %thead
     %tr
       %th #
-      %th Track
+      %th Standing table
+      %th Driver standings
+      %th Team standings
   %tbody
     - @season.standings.each_with_index do |standing,i|
       %tr
         %td= i+1
         %td= link_to "Standing #{i}", league_series_season_standing_path(standing.league,standing.series,standing.season,standing)
+        %td
+          - standing.driver_standing_graphics.each_with_index do |driver_standing_graphic,i|
+            = link_to "Image #{i+1}", driver_standing_graphic.url, target: :blank
+        -#%td
+        -#  - standing.standing_graphics.each_with_index do |standing_graphic,i|
+        -#    = link_to "Image #{i+1}", standing_graphic.url, target: :blank
 
 -#:javascript
 -#  $(".table").tablesorter();

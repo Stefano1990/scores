@@ -35,6 +35,6 @@ class Season < ActiveRecord::Base
   end
 
   def to_param
-    "#{id}-#{name}"
+    "#{id}-#{name.parameterize}"
   end
 end

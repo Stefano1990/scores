@@ -9,7 +9,7 @@ class PointSystem < ActiveRecord::Base
 
   def expire_results_and_standings
     season.results.each { |result| result.recalculate }
-    season.standings.each { |standing| standing.recalculate }
+    season.driver_standings.each { |driver_standing| driver_standing.recalculate }
   end
 
   def pts_for(nr)
