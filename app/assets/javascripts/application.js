@@ -12,9 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
 //= require ace/ace
 //= require ace/theme-twilight
 //= require ace/mode-javascript
 //= require jquery-ace.min
-//= require_tree .
+//= require bootstrap.min

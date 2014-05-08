@@ -34,9 +34,9 @@
         %td
           - standing.driver_standing_graphics.each_with_index do |driver_standing_graphic,i|
             = link_to "Image #{i+1}", driver_standing_graphic.url, target: :blank
-        -#%td
-        -#  - standing.standing_graphics.each_with_index do |standing_graphic,i|
-        -#    = link_to "Image #{i+1}", standing_graphic.url, target: :blank
+        %td
+          - standing.team_standing_graphics.each_with_index do |team_standing_graphic,i|
+            = link_to "Image #{i+1}", team_standing_graphic.url, target: :blank
 
 -#:javascript
 -#  $(".table").tablesorter();

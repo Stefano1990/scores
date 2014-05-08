@@ -47,8 +47,10 @@ class Standing < ActiveRecord::Base
     nr_of_graphics.times do |i|
       first_pos = (entries*i)+1
       last_pos = entries*i
-      team_standing_graphic = team_standing_graphics.create(first_pos: first_pos, last_pos: last_pos)
-      team_standing_graphic.create_image(i,nr_of_graphics)
+      if team_standing.team
+        team_standing_graphic = team_standing_graphics.create(first_pos: first_pos, last_pos: last_pos)
+        team_standing_graphic.create_image(i,nr_of_graphics)
+      end
     end
   end
 

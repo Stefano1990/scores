@@ -20,7 +20,7 @@ class TeamStandingGraphic < ActiveRecord::Base
     @team_standings = team_standings.limit(limit).offset(offset)
     @font_attributes = font_attributes_hash # defined in ImageComposer
     compose_sub_image('pos','positions') if @config["general"]['positions']
-    compose_sub_image('team','teams') if @config["general"]['teams']
+    compose_sub_image('name','names') if @config["general"]['names']
     compose_sub_image('tot_pts','scores') if @config["general"]['scores']
 
     @canvas.write("#{@background.path.sub(/.png/, '')}-generated.png") # overwrite the old attachment. remove the last .png
@@ -39,11 +39,7 @@ class TeamStandingGraphic < ActiveRecord::Base
       when "pos" then @team_standings.each{|ts| string << "#{ts.pos}\n" }
       when "tot_pts" then @team_standings.each{|ts| string << "#{ts.tot_pts}\n" }
     end
-    if model_attribute == "team"
-      x = @config['names']["x-pos"]
-    else
-      x = @config[config_attribute]["x-pos"]
-    end
+    x = @config[config_attribute]["x-pos"]
     y = @config['general']['y-pos']
     sub_image_job = Dragonfly.app.generate(:multiline,string,font_attributes)
     sub_image = MiniMagick::Image.open(sub_image_job.path)
