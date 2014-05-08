@@ -42,6 +42,7 @@ Scores::Application.routes.draw do
     resources :teams
     resources :results
   end
+  resources :schedules
   resources :point_systems
   resources :results
 

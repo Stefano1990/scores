@@ -28,18 +28,16 @@ module ApplicationHelper
 
   def breadcrumbs
     output = ""
-    controller = params[:controller]
-    action = params[:action]
-    if current_season
-      league = current_season.league
-      series = current_season.series
-      season = current_season
-      output << crumb_link(current_season.league.name, league_path(league))
-      output << crumb_link(current_season.series.name, league_series_path(league,series))
-      output << crumb_link(current_season.name, league_series_season_path(league,series,season))
+    output << crumb_link(current_league.name,league_path(current_league)) if params[:league_id]
+    output << crumb_link(current_series.name,league_series_path(current_league,current_series)) if params[:series_id]
+    output << crumb_link(current_season.name,league_series_season_path(current_league,current_series,current_season)) if params[:season_id]
+    if params[:action] == "show"
+      case params[:controller]
+        when "leagues" then output << crumb_link(current_league.name)
+        when "series" then output << crumb_link(current_series.name)
+        when "seasons" then output << crumb_link(current_season.name)
+      end
     end
-    if controller == "standings" && action == "show" then output << crumb_link("Standing") end
-    if controller == "results" && action == "show" then output << crumb_link("Result") end
     output.html_safe
   end
 

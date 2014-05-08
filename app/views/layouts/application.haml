@@ -23,29 +23,20 @@
           %ul.nav.navbar-nav
             %li.dropdown
               %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-                = "Leagues (#{current_season.league.name})"
+                = "Leagues (#{current_league.name})"
                 %b.caret
               %ul.dropdown-menu
-                %li
-                  %a{href: "#"} Action
-                %li
-                  %a{href: "#"} Another action
-                %li
-                  %a{href: "#"} Something else here
-                %li.divider
-                %li
-                  %a{href: "#"} Separated link
-                %li.divider
-                %li
-                  %a{href: "#"} One more separated link
+                - current_league.user.leagues.each do |league|
+                  %li= link_to league.name, league_path(league)
             %li= link_to "All leagues", graphics_path
             %li= link_to "Profile", '#'
           %ul.nav.navbar-nav.navbar-right
-            %li= link_to "Results", league_series_season_path(current_season.league,current_season.series,current_season)
-            %li= link_to "Standings", league_series_season_path(current_season.league,current_season.series,current_season)
-            %li= link_to "config/background", edit_league_series_season_path(current_season.league,current_season.series,current_season)
-            %li= link_to "point system", edit_point_system_path(current_season.point_system)
-            %li= link_to "Teams", season_teams_path(current_season)
+            %li= link_to "Results", league_series_season_path(current_league,current_series,current_season) if current_league && current_series && current_season
+            %li= link_to "Standings", league_series_season_path(current_league,current_series,current_season) if current_league && current_series && current_season
+            %li= link_to "config/background", edit_league_series_season_path(current_league,current_series,current_season) if current_league && current_series && current_season
+            %li= link_to "point system", edit_point_system_path(current_season.point_system) if current_season
+            %li= link_to "Schedule", edit_schedule_path(current_season.schedule) if current_season
+            %li= link_to "Teams", season_teams_path(current_season) if current_season
             -#%li= link_to "New standings", new_league_series_season_standing_path(@league,@series,@season), class: 'btn btn-primary'
             %li= link_to "Log out", destroy_user_session_path, method: :delete
     .container-fluid

@@ -5,6 +5,7 @@ class SeasonsController < ApplicationController
 
   def show
     @season = Season.find(params[:id])
+    session[:season_id] = @season.id
   end
 
   def new

@@ -1,0 +1,35 @@
+%h1.page-header= "Edit schedule"
+= nested_form_for @schedule, html: { class: 'form-horizontal' } do |f|
+  = render 'shared/form_errors', form_model: @schedule
+  .row
+    .col-sm-6
+      %ul.list-group#rounds
+        = f.fields_for :rounds, wrapper: false do |round_form|
+          %li.list-group-item
+            .form-group
+              %label.control-label.col-sm-2{ for: "track" }
+                Track
+              .col-sm-10
+                = round_form.collection_select(:track_id,Track.all, :id, :name, {}, { class: "form-control" })
+            .from-group
+              %label.control-label.col-sm-2{ for: :start }
+                Start
+              .col-sm-10
+                = round_form.datetime_select(:start, {}, {})
+            = round_form.link_to_remove "Remove this round"
+
+  = f.link_to_add "Add round", :rounds, data: { target: "#rounds"}
+
+  -#= render 'form_fields', f: f
+  -#%ul.rounds
+  -#  - @schedule.rounds.each do |round|
+  -#    = fields_for "season[round_attributes][]", round do |r|
+  -#      %li
+  -#        = link_to "remove", "#delete", class: "delete-invite"
+  -#        = r.label :name, "Track"
+  -#  %li
+  -#    = link_to "Add Another", "#add", :id => "add-another"
+  .form-group
+    .col-sm-offset-2.col-sm-10
+
+      = f.submit 'Save schedule', class: 'btn btn-success', disable_with: 'Saving schedule. Please wait...'

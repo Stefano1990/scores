@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140508095707) do
+ActiveRecord::Schema.define(:version => 20140508154621) do
 
   create_table "cars", :force => true do |t|
     t.string   "name"
@@ -295,10 +295,8 @@ ActiveRecord::Schema.define(:version => 20140508095707) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.string   "status"
-    t.string   "round"
     t.integer  "season_id"
     t.datetime "start_time"
-    t.string   "track"
     t.string   "series"
     t.string   "hosted_session_name"
     t.string   "league_name"
@@ -306,6 +304,21 @@ ActiveRecord::Schema.define(:version => 20140508095707) do
     t.string   "league_season"
     t.integer  "league_season_id"
     t.string   "points_system"
+    t.integer  "round_id"
+  end
+
+  create_table "rounds", :force => true do |t|
+    t.integer  "schedule_id"
+    t.integer  "track_id"
+    t.datetime "start"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "schedules", :force => true do |t|
+    t.integer  "season_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "seasons", :force => true do |t|
@@ -388,6 +401,13 @@ ActiveRecord::Schema.define(:version => 20140508095707) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "tracks", :force => true do |t|
+    t.string   "name"
+    t.string   "iracing_name"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "users", :force => true do |t|

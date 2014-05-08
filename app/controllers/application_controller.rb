@@ -5,34 +5,33 @@ class ApplicationController < ActionController::Base
   end
 
   def current_league
-    if @current_league.nil?
-      if session[:league_id]
-        @current_league = League.find(session[:league_id])
-        session[:league_id] = @current_league.id
-      else
-        if params[:league_id]
-          @current_league = League.find(session[:league_id])
-          session[:league_id] = @current_league.id
-        end
-        if params[:controller] == 'leagues' && params[:action] == 'index'
-          @current_league = nil
-        end
-        if params[:controller] == 'leagues' && params[:action] == 'show'
-          @current_league = League.find(params[:id])
-          session[:league_id] = @current_league.id
-        end
-      end
-    end
-    @current_league
+    find_current(@current_league,:league_id,League,"leagues")
   end
   helper_method :current_league
 
-  def current_season
-    if @current_season.nil?
-      @current_season = current_league.series.last.seasons.last
+  def current_series
+    find_current(@current_series,:series_id,Series,"series")
+  end
+  helper_method :current_series
 
-    end
-    @current_season
+  def current_season
+    find_current(@current_season,:season_id,Season,"season")
   end
   helper_method :current_season
+
+
+  private
+  def find_current(model,symbol,model_class,controller)
+    if model.nil? || model.id != params[symbol]
+      if session[symbol]
+        model = model_class.find(session[symbol])
+      else
+        if params[:controller] == controller && params[:action] == "show" && params[:id]
+          model = model_class.find(params[:id])
+        end
+      end
+    end
+    session[symbol] = model.id if model
+    model
+  end
 end

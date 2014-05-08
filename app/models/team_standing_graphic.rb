@@ -35,9 +35,9 @@ class TeamStandingGraphic < ActiveRecord::Base
     string = ""
     font_attributes = combine_font_properties(config_attribute)
     case model_attribute
-      when "name" then @team_standings.each{|ts| string << "#{ts.team.name}\n" }
-      when "pos" then @team_standings.each{|ts| string << "#{ts.pos}\n" }
-      when "tot_pts" then @team_standings.each{|ts| string << "#{ts.tot_pts}\n" }
+      when "name" then @team_standings.each{|ts| string << "#{ts.team.name}\n" if ts.team }
+      when "pos" then @team_standings.each{|ts| string << "#{ts.pos}\n" if ts.team }
+      when "tot_pts" then @team_standings.each{|ts| string << "#{ts.tot_pts}\n" if ts.team }
     end
     x = @config[config_attribute]["x-pos"]
     y = @config['general']['y-pos']

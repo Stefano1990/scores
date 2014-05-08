@@ -5,8 +5,8 @@ class SeriesController < ApplicationController
   end
 
   def show
-    @league = League.find(params[:league_id])
-    @series = @league.series.find(params[:id])
+    @series = Series.find(params[:id])
+    session[:series_id] = @series.id
   end
 
   def new

@@ -17,3 +17,5 @@
 //= require ace/mode-javascript
 //= require jquery-ace.min
 //= require bootstrap.min
+//= require jquery_nested_form
+// this should come last... = require_tree .

@@ -88,6 +88,7 @@ GEM
       subexec (~> 0.2.1)
     mini_portile (0.5.2)
     multi_json (1.8.4)
+    nested_form (0.3.2)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     orm_adapter (0.5.0)
@@ -184,6 +185,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   mini_magick
+  nested_form
   nokogiri
   paper_trail (~> 3.0.1)
   paperclip (~> 3.0)

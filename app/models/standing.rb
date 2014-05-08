@@ -5,11 +5,11 @@ class Standing < ActiveRecord::Base
   belongs_to :season
 
   has_many        :drivers, through: :result, uniq: true
-  has_many        :driver_standings, order: 'tot_pts desc', uniq: true
-  has_many        :team_standings, order: 'tot_pts desc', uniq: true
+  has_many        :driver_standings, order: 'tot_pts desc', uniq: true, dependent: :destroy
+  has_many        :team_standings, order: 'tot_pts desc', uniq: true, dependent: :destroy
   has_many        :teams, through: :team_standings, uniq: true
-  has_many        :driver_standing_graphics, class_name: "DriverStandingGraphic"
-  has_many        :team_standing_graphics, class_name: "TeamStandingGraphic"
+  has_many        :driver_standing_graphics, class_name: "DriverStandingGraphic", dependent: :destroy
+  has_many        :team_standing_graphics, class_name: "TeamStandingGraphic", dependent: :destroy
 
   delegate        :series, to: :result
   delegate        :league, to: :result
@@ -17,8 +17,8 @@ class Standing < ActiveRecord::Base
 
   attr_accessible   :result
 
-  after_save      :generate_standings
-  after_save      :generate_graphics
+  #after_save      :generate_standings
+  #after_save      :generate_graphics
 
   def recalculate
     driver_standings.destroy_all
@@ -47,10 +47,8 @@ class Standing < ActiveRecord::Base
     nr_of_graphics.times do |i|
       first_pos = (entries*i)+1
       last_pos = entries*i
-      if team_standing.team
-        team_standing_graphic = team_standing_graphics.create(first_pos: first_pos, last_pos: last_pos)
-        team_standing_graphic.create_image(i,nr_of_graphics)
-      end
+      team_standing_graphic = team_standing_graphics.create(first_pos: first_pos, last_pos: last_pos)
+      team_standing_graphic.create_image(i,nr_of_graphics)
     end
   end
 

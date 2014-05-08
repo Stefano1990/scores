@@ -2,14 +2,18 @@ class Season < ActiveRecord::Base
   include ImageComposer
   attr_accessible :description, :name, :series_id, :config, :background
   belongs_to      :series
-  belongs_to      :user
   has_many        :drivers, through: :results, uniq: true
   has_many        :standings, dependent: :destroy
   has_many        :results, dependent: :destroy
   has_many        :teams
+  has_one         :schedule
   has_one         :point_system
 
   delegate        :league, to: :series
+  delegate        :user, to: :series
+  delegate        :rounds, to: :schedule
+
+  after_create    -> { self.create_schedule }
 
   dragonfly_accessor :background
   dragonfly_accessor :preview

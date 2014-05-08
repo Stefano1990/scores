@@ -22,6 +22,7 @@ gem 'jquery-ace-rails'
 gem 'rb-readline'
 gem 'paper_trail', '~> 3.0.1'
 gem 'sidekiq'
+gem 'nested_form'
 
 group :development do
   gem "better_errors"

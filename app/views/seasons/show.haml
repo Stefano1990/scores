@@ -1,6 +1,20 @@
 %h1.page-header
   = "#{@season.series.name} - #{@season.name}"
 %h2
+  Schedule
+%table.table.table-striped
+  %thead
+    %tr
+      %th Round
+      %th Track
+      %th Date
+  %tbody
+    - @season.rounds.each_with_index do |round,i|
+      %tr
+        %td= i+1
+        %td= round.track.name
+        %td= round.start
+%h2
   Results
   = link_to "New", new_season_result_path(@season), class: 'btn btn-primary pull-right'
 %table.table.table-striped

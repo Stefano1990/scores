@@ -4,6 +4,7 @@ class Result < ActiveRecord::Base
   include ImageComposer
 
   belongs_to          :season
+  #belongs_to          :round
   has_many            :driver_results, order: 'interval desc, fin_pos asc', dependent: :destroy
   has_many            :drivers, through: :driver_results
   has_many            :team_results, dependent: :destroy
@@ -22,6 +23,7 @@ class Result < ActiveRecord::Base
 
   delegate        :series, to: :season
   delegate        :league, to: :season
+  #delegate        :track, to: :round
 
 
   # before changing the data structure around these were attributes on this model:
@@ -34,27 +36,9 @@ class Result < ActiveRecord::Base
   #remove_column :results, :track_image_url
   #remove_column :results, :url
 
-  def get_meta_data
-    get_image
-    get_round
-  end
 
   def create_standings
     season.standings.create(result: self)
-  end
-
-  def get_round
-    if round.nil? || round.empty?
-      @doc ||= Nokogiri::HTML(open(url))
-      self.round = @doc.css('select[name=schedule_id] option[selected]').first.text.scan(/\((.*)\)/).flatten.first
-    end
-  end
-
-  def get_image
-    if track_image_url.nil? || track_image_url.empty?
-      @doc ||= Nokogiri::HTML(open(url))
-      self.track_image_url = "http://danlisa.com/scoring/"+@doc.css('img[style="border: 1px solid #666666;"]').first[:src]
-    end
   end
 
   def parse_results
@@ -88,7 +72,7 @@ class Result < ActiveRecord::Base
         when 0
         when 1
           self.start_time = Time.parse(line[0])
-          self.track = line[1]
+          self.round_id = season.schedule.find_round_for_result(line[0],line[1]).id # date, track
           self.hosted_session_name = line[2]
         when 2
         when 3

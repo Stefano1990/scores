@@ -3,6 +3,8 @@ class Series < ActiveRecord::Base
   belongs_to      :league
   has_many        :seasons
 
+  delegate :user, to: :league
+
   def to_param
     "#{id}-#{name}"
   end

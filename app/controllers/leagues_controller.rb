@@ -5,6 +5,7 @@ class LeaguesController < ApplicationController
 
   def show
     @league = League.find(params[:id])
+    session[:league_id] = @league.id # Change the current league.
   end
 
   def new
